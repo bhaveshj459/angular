@@ -1,0 +1,149 @@
+.modal-dialog {
+    background-color: #FFFFFF;
+    max-width: 1080px;
+    height: 640px;
+    box-shadow: 0px 4px 20px #00000029;
+    border-radius: 24px;
+
+}
+
+.modal-content {
+    width: 100%;
+    height: 100%;
+}
+
+.button {
+    font-size: 13px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: #888888;
+    text-decoration: none;
+    text-align: left;
+    left: 0px;
+
+}
+
+a.active {
+    color: #0091FF;
+}
+
+.nav {
+    border-right: 2px solid #EEEEEE;
+    margin-left: 0%;
+    width: 15%;
+    height: 100%;
+    position: absolute;
+
+}
+
+.nav-items {
+    font-size: 13px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    margin: 50px 0;
+}
+
+.modal-body {
+    height: 100%;
+}
+
+.modal-footer {
+    right: 0%;
+}
+
+.wrapper {
+    margin-left: 65%
+}
+
+.modal-header {
+    position: relative;
+
+}
+
+
+.modal-title {
+    color: #0091FF;
+    font: bold 22px;
+}
+
+.body {
+    margin-left: 15%
+}
+
+.btn {
+    border-radius: 30px;
+    width: 150px
+}
+
+.section-title {
+    font: bold 13px;
+    color: #111111;
+    margin-bottom: 5px
+}
+
+.form-check-label {
+    margin: 3px
+}
+
+.sub-lable {
+    font: 11px;
+    color: #888888;
+}
+
+.sub-section {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+input[type='radio'] {
+    border: 1px solid #0091FF;
+    border-radius: 50%;
+}
+
+select {
+    width: 384px;
+    height: 42px;
+    border: 1px solid #DDDDDD;
+    border-radius: 21px;
+    color: #888888;
+    background: transparent;
+}
+
+textarea {
+    resize: none;
+    width: 804px;
+    height: 160px;
+    border: 1px solid #DDDDDD;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #888888;
+}
+
+::placeholder {
+    color: #888888;
+    font: 13px;
+    opacity: 1;
+    margin-left: 100px
+}
+
+.clrbut {
+    background: transparent;
+    color: #0091FF;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 10px;
+    border-color: #0091FF;
+    padding: 3px;
+    right: 0px;
+    float: right;
+}
+
+.btnsecondary {
+    background: transparent;
+    color: #0091FF;
+    border-color: #0091FF;
+}
+
+.btn primary {
+    color: #FFFFFF;
+}

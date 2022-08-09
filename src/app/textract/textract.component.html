@@ -1,0 +1,154 @@
+<div class="modal-header">
+    <h5 class="modal-title">Text to Speech Demonstration</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body modal-dialog-scrollable">
+    <div class="body-sections">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="section-title">Document Name</div>
+                <div class="image-section">
+                    <img [src]="img" alt="">
+                </div>
+                <div class="row buttondiv">
+                    <select name="image-file" id="dropdown" class="col-sm-6">
+                        <option value="null">Choose Sample Document</option>
+                        <option value="English, UK">English, UK</option>
+                        <option value="Hindi, IND">Hindi, IND</option>
+                    </select>
+                    <input type="file" id="imagfile" class="custom-file-input" placeholder="Upload Document" hidden><label for="imagfile" class="filelabel col-sm-6">Upload Document</label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="section-title">Results</div>
+                <ul class="nav nav-fill mb-3 row" id="pills-tab" role="tablist">
+                    <li class="nav-item col-sm-3" role="presentation">
+                        <a class="nav-link active" id="raw-text-tab" data-bs-toggle="pill" data-bs-target="#raw-text" type="button" role="tab" aria-controls="raw-text" aria-selected="true">Raw Text</a>
+                    </li>
+                    <li class="nav-item col-sm-3" role="presentation">
+                        <a class="nav-link" id="forms-tab" data-bs-toggle="pill" data-bs-target="#forms" type="button" role="tab" aria-controls="forms" aria-selected="false">Forms</a>
+                    </li>
+                    <li class="nav-item col-sm-3" role="presentation">
+                        <a class="nav-link" id="tables-tab" data-bs-toggle="pill" data-bs-target="#tables" type="button" role="tab" aria-controls="tables" aria-selected="false">Tables</a>
+                    </li>
+                    <li class="nav-item col-sm-3" role="presentation">
+                        <a class="nav-link" id="queries-tab" data-bs-toggle="pill" data-bs-target="#queries" type="button" role="tab" aria-controls="queries" aria-selected="false">Queries</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+
+                    <div class="tab-pane fade show active" id="raw-text" role="tabpanel" aria-labelledby="raw-text-tab">
+                        <div>
+                            <div class="search" style="display: inline-block;">
+                                <i class="fa fa-search"></i>
+                                <input type="text" class="form-control" placeholder="Search...">
+                            </div>
+                            <select name="out-text" id="dropdown" class="output-text" style="display: inline-block;">
+                                <option value="null">Segment by line</option>
+                                <option value="English, UK">English, UK</option>
+                                <option value="Hindi, IND">Hindi, IND</option>
+                            </select>
+                        </div>
+                        <div class="container">
+                            <div class="tags" *ngFor="let tag of tags">{{tag}}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="forms" role="tabpanel" aria-labelledby="forms-tab">
+                        <div class="search forms">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;">
+                        </div>
+
+                        <div>
+                            <div class="forms-tab-cards" *ngFor="let data of formsCardsData">
+                                <div class="forms-tab-cards-heading">{{data.heading}}</div>
+                                <div class="forms-tab-cards-body">{{data.data}}</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="tables" role="tabpanel" aria-labelledby="tables-tab">
+                        <div class="search forms">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;">
+                        </div>
+                        <table style="width: 100%; margin-top: 30px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Qty.</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row">Latte Macchiato</td>
+                                    <td>2</td>
+                                    <td>4.50</td>
+                                    <td>9.00</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">Gloki</td>
+                                    <td>1</td>
+                                    <td>5.00</td>
+                                    <td>5.00</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">Schweinschnitzel</td>
+                                    <td>1</td>
+                                    <td>22.00</td>
+                                    <td>22.00</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">Chasspatzli</td>
+                                    <td>1</td>
+                                    <td>18.50</td>
+                                    <td>18.50</td>
+                                </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="queries" role="tabpanel" aria-labelledby="queries-tab">
+                        <div class="search forms">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Enter a search query..." style="width: 335px; display: inline-block; height: 30px;">
+                            <button type="button" class="btns btnsecondary">Submit</button>
+                        </div>
+                        <h3 class="label-query"><b> Note:</b> Limit of 200 characters per query. Duplicate queries not permitted</h3>
+
+                        <div class="query-sub-body">
+                            <h3 class="query-sub-heading"> What is the item name?
+                                <label class="query-sub-heading-lable">Alias: Name</label>
+                            </h3>
+                            <div class="query-sub-cont">4572</div>
+                        </div>
+                        <div class="query-sub-body">
+                            <h3 class="query-sub-heading"> What is the item name?
+                                <label class="query-sub-heading-lable">Alias: Name</label>
+                            </h3>
+                            <div class="query-sub-cont">4572</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
+    <button type="button" class="btn btnprimary">RESET DEMO</button>
+</div>

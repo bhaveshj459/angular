@@ -1,0 +1,39 @@
+.fletter {
+    text-align: left;
+    font: normal normal bold 26px/32px Oswald;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin-right: 0;
+    display: inline;
+    font-weight: 900;
+}
+
+.sletter {
+    text-align: left;
+    font: normal normal normal 26px/32px Oswald;
+    letter-spacing: 0px;
+    color: #888888;
+    opacity: 1;
+    display: inline;
+}
+
+hr {
+    border-color: #AAAAAA;
+
+}
+
+.heading {
+    margin-top: 50px;
+}
+
+.sidebar {
+    margin-top: 3%;
+    width: 3%;
+    height: 100%;
+    position: absolute;
+}
+
+.appBody {
+    margin-left: 4%
+}

@@ -1,0 +1,98 @@
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="nav">
+        <ul type="none">
+          <li class="nav-items">
+            <a routerLink="/text-to-speech" class="button" routerLinkActive="active"> Speech to Text</a>
+          </li>
+          <li class="nav-items">
+            <a routerLink="/textract" class="button" routerLinkActive="active"> Textract</a>
+          </li>
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+
+          <li class="nav-items">
+            <a href="#" class="button"> Speech to Text</a>
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="body">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Text to Speech</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body modal-dialog-scrollable row">
+            <div class="body-sections">
+
+              <div class="section-title">Engine</div>
+
+              <div class="sub-section">
+                <input type="radio" name="engine" id="engine" value="option1">
+                <label for="exampleRadios1"> Neural </label>
+                <div class="sub-lable"> Produces the most natural human-like speech possible</div>
+              </div>
+              <div class="" style=" display: inline-block">
+                <input type="radio" id="engine" value="standard" name="engine" checked>
+                <label for="neural"> Standard</label>
+                <div class="sub-lable"> Produces the most natural human-like speech possible</div>
+              </div>
+            </div>
+
+            <div class="body-section">
+              <div class="sub-section">
+
+                <div class="section-title">Language</div>
+                <select name="Language" id="dropdown">
+                  <option value="English, US">English, US</option>
+                  <option value="English, UK">English, UK</option>
+                  <option value="Hindi, IND">Hindi, IND</option>
+                </select>
+              </div>
+              <div class="sub-section">
+
+                <div class="section-title ">Voice</div>
+                <select name="voice" id="dropdown">
+                  <option value="Joanna, female">Joanna, Female</option>
+                  <option value="Jone, male">Jone, Male</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="body-section">
+              <div class="section-title">Input</div>
+              <textarea name="input-text" placeholder="English, US" [(ngModel)]="text"  maxlength="58"></textarea>
+              <div style="width: 804px;">
+
+                <div class="sub-lable" style="font-size: 13px ;display: inline-block ;"> {{58- text.length}} Characters remaining </div>
+                <button type="button" class="clrbut" (click)="clearText()">clear text</button>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
+            <button type="button" class="btn btn-primary"><i class="fa-solid fa-play" style="color: aliceblue;"></i> listen</button>
+          </div>
+        </div> -->
+      <div class="body">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

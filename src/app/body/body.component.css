@@ -1,0 +1,125 @@
+.body {
+    margin: 10px 20px;
+    display: inline-block;
+}
+
+#title {
+    font: 96px Oswald;
+    color: #000000;
+    text-transform: uppercase;
+    opacity: 1;
+    width: 40%;
+    /* display: inline-block; */
+
+}
+
+hr {
+    border-color: #AAAAAA;
+    top: 100%;
+
+}
+
+.heading {
+    /* display: inline-block; */
+    width: 10%;
+    text-align: left;
+    font-weight: bolder;
+    font: 48px Oswald;
+    color: #000000;
+    border-left: #AAAAAA dotted 2px;
+}
+
+.subheading {
+    font: 16px Oswald;
+}
+
+.container {
+    padding: 0;
+    left: 0;
+}
+
+.search-seaction section {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: #000000;
+    margin: 15px 0;
+    ;
+}
+
+
+.search-seaction input {
+    background: transparent;
+    border: none;
+    border-bottom: #AAAAAA solid 2px
+}
+
+::placeholder {
+    color: #888888;
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    opacity: 1;
+}
+
+input:focus {
+    outline: none !important;
+    border-bottom: #AAAAAA solid 2px;
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: #888888;
+}
+
+#search-label {
+    font-size: 18px;
+    font-family: 'Open Sans';
+    text-align: left;
+    color: #888888;
+    display: inline-block;
+    margin-left: 0;
+}
+
+.para {
+    font-size: 15px;
+    font-family: 'Open Sans';
+    margin: 40px 0;
+}
+
+.cards {
+    border-left: solid 3px;
+    margin: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    padding-left: 10px
+}
+
+ul {
+    display: inline-block;
+}
+
+.card-text ul li {
+    display: inline-block;
+    text-align: left;
+    font: 12px;
+    font-family: 'Open Sans';
+    margin-bottom: 9px;
+    margin-top: 9px
+}
+
+.cardtitle {
+    font-size: 16px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 4px
+}
+
+.rows {
+    column-count: 3;
+    height: max-content;
+    width: max-content;
+
+}

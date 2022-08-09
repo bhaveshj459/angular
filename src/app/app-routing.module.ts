@@ -1,7 +1,17 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule, importProvidersFrom } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { TextToSpeechComponent } from './text-to-speech/text-to-speech.component'
+import { TextractComponent } from './textract/textract.component'
+
+const routes: Routes = [
+  {
+    path: 'text-to-speech', component: TextToSpeechComponent
+  },
+  {
+    path: 'textract', component: TextractComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

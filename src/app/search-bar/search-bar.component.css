@@ -1,0 +1,19 @@
+
+#content {
+    position: relative;
+}
+#content div {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+}
+img{
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    opacity: 1;
+    mix-blend-mode: multiply;
+    margin-right: 12px;
+    margin-left: 12px;
+}

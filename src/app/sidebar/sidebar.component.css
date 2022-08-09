@@ -1,0 +1,26 @@
+img{
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    opacity: 1;
+    mix-blend-mode: multiply;
+    right: 0;
+}
+.rotate{
+    transform: rotate(-90deg);
+    font: 26px/32px Oswald;
+    color: #AAAAAA;
+    text-transform: uppercase;
+    width: max-content;
+    height: 150px;
+
+    
+}
+.sidebar{
+
+    border-right: #AAAAAA solid 2px;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    margin: 0%
+}
