@@ -23,20 +23,17 @@
 
 .modal-header {
     position: relative;
-
+    height: 40px;
 }
 
 
 .modal-title {
     font-size: 18px;
-    font-weight: 900;
+    font-weight: bold;
     color: #0091FF;
     font-family: 'Open Sans';
 }
 
-.modal-header {
-    height: 40px;
-}
 
 .body {
     margin-left: 15%
@@ -75,15 +72,11 @@ input[type='radio'] {
 }
 
 select {
-    display: inline-block;
-    width: 213px;
-    height: 30px;
     border: 1px solid #DDDDDD;
     border-radius: 21px;
     color: #000000;
     background: transparent;
-    margin-right: 65px;
-    margin-bottom: 10px;
+    font-size: 13px;
 }
 
 
@@ -124,7 +117,6 @@ select {
 }
 
 .image-section {
-    width: 386px;
     height: 382px;
     border: 1px solid #DDDDDD;
     border-radius: 8px;
@@ -184,11 +176,11 @@ a {
     left: 16px;
 }
 
-.output-text {
+/* .output-text {
     float: right;
     width: 148px;
     height: 30px;
-}
+} */
 
 .tags {
     color: #000000;
@@ -256,8 +248,7 @@ td {
 
 .forms-tab-cards {
     display: inline-block;
-    margin: 24px;
-    margin-left: 0px;
+    margin: 12px;
 }
 
 .forms-tab-cards-heading {
@@ -280,19 +271,21 @@ td {
 }
 
 .filelabel {
-    color: #0091FF;
     font-size: 13px;
-    text-align: center;
-    align-content: center;
-    font-family: 'Open Sans';
     box-shadow: 0px 3px 6px #00000029;
     border: 1px solid #0091FF;
     border-radius: 24px;
-    width: 158px;
-    height: 30px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #0091FF;
+    font-size: 13px;
+    padding: 8.5px 12px;
+    background: transparent;
+    cursor: pointer;
+    width: max-content;
+    margin-left: auto;
 }
 
-.buttondiv {}
 
 .btnprimary {
     width: 208px;
@@ -304,4 +297,16 @@ td {
     font: bold 13px 'Open Sans';
     color: #FFFFFF;
     text-transform: uppercase;
+}
+
+.rightsec {
+    border-left: 1px solid #EEEEEE;
+}
+
+.nav-link {
+    padding: 6px;
+}
+
+.tab-content {
+    margin-right: 10px;
 }

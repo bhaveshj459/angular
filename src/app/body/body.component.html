@@ -1,23 +1,25 @@
 <div class="body">
 
-  <hr>
-  <div class="container row">
 
-    <div class="col-md-6" id="title">
+  <div class="header-sec container">
+    <p id="title">
       Explore
-    </div>
-    <div class="heading col-md-2">{{api}}
-      <div class="subheading">APIs</div>
-    </div>
-    <div class="heading col-md-2">{{plat}}
-      <div div class="subheading">Platforms</div>
-    </div>
-    <div class="heading col-md-2">{{res}}
-      <div div class="subheading">Resources</div>
-    </div>
+    </p>
+    <div class="subsection">
 
+      <div class="heading ">{{api}}
+        <div class="subheading">APIs</div>
+      </div>
+      <div class="heading ">{{plat}}
+        <div div class="subheading">Platforms</div>
+      </div>
+      <div class="heading ">{{res}}
+        <div div class="subheading">Resources</div>
+      </div>
+    </div>
   </div>
-  <hr style="margin-top: 0%">
+
+
 
   <div class="search-seaction">
     <section> Search for an API </section>
@@ -32,46 +34,19 @@
 
 
   <div>
-    <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
-  
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+    <div class="rows">
+
+      <div class="cards" *ngFor="let data of database" [style.border-color]="data.color">
+        <ul type="none">
+          <div class="cardtitle">{{data.title}}</div>
+
+          <li *ngFor="let api of data.value" data-bs-toggle="modal" data-bs-target="#exampleModal" class="li-cont">
+            {{api}}
+          </li>
+        </ul>
+
       </div>
     </div>
+
+
   </div>
-  </div>  -->
-
-
-
-  <div class="rows">
-
-    <div class="cards" *ngFor="let data of database" [style.border-color]= "data.color" >
-      <ul type="none">
-        <div class="cardtitle">{{data.title}}</div>
-
-        <li *ngFor="let api of data.value"   data-bs-toggle="modal" data-bs-target="#exampleModal">
-          {{api}}
-        </li>
-      </ul>
-
-    </div>
-  </div>
-
-
-</div>

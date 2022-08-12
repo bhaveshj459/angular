@@ -1,16 +1,17 @@
 .body {
-    margin: 10px 20px;
+    /* margin: 16px; */
     display: inline-block;
+    width: 100%;
 }
 
 #title {
-    font: 96px Oswald;
+    font-size: 96px;
+    font-family: 'Oswald';
+    font-weight: lighter;
     color: #000000;
+    padding-right: 32px;
     text-transform: uppercase;
-    opacity: 1;
-    width: 40%;
-    /* display: inline-block; */
-
+    display: inline-block
 }
 
 hr {
@@ -20,17 +21,20 @@ hr {
 }
 
 .heading {
-    /* display: inline-block; */
-    width: 10%;
-    text-align: left;
-    font-weight: bolder;
-    font: 48px Oswald;
+    display: inline-block;
+    text-align: center;
+    font-size: 48px;
+    padding: 0px 32px;
+    font-family: 'Oswald';
     color: #000000;
     border-left: #AAAAAA dotted 2px;
 }
 
 .subheading {
-    font: 16px Oswald;
+    font-size: 16px;
+    font-family: 'Montserrat';
+    font-weight: normal;
+    text-align: left;
 }
 
 .container {
@@ -41,30 +45,31 @@ hr {
 .search-seaction section {
     text-align: left;
     font-size: 12px;
-    font-weight: 900;
+    font-weight: bolder;
     font-family: 'Open Sans';
     color: #000000;
-    margin: 15px 0;
-    ;
+    margin-top: 80px;
+    margin-bottom: 18px;
 }
 
 
 .search-seaction input {
     background: transparent;
     border: none;
-    border-bottom: #AAAAAA solid 2px
+    border-bottom: #AAAAAA solid 2px;
+    width: 350px;
 }
 
 ::placeholder {
     color: #888888;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: bold;
     font-family: 'Open Sans';
     opacity: 1;
 }
 
 input:focus {
-    outline: none !important;
+    outline: none;
     border-bottom: #AAAAAA solid 2px;
     font-size: 18px;
     font-weight: 900;
@@ -82,30 +87,31 @@ input:focus {
 }
 
 .para {
-    font-size: 15px;
+    font-size: 12px;
     font-family: 'Open Sans';
-    margin: 40px 0;
+    margin-top: 40px;
+    text-align: left;
 }
 
 .cards {
     border-left: solid 3px;
-    margin: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 36px;
     text-align: left;
-    padding-left: 10px
+
 }
 
 ul {
     display: inline-block;
+    padding-left: 12px;
+    padding-bottom: 0%;
+    margin-bottom: 0%;
 }
 
-.card-text ul li {
-    display: inline-block;
+.li-cont {
     text-align: left;
-    font: 12px;
+    font-size: 12px;
     font-family: 'Open Sans';
-    margin-bottom: 9px;
-    margin-top: 9px
+    padding-top: 18px;
 }
 
 .cardtitle {
@@ -118,8 +124,21 @@ ul {
 }
 
 .rows {
+    margin-top: 36px;
     column-count: 3;
-    height: max-content;
-    width: max-content;
 
+}
+
+.subsection {
+    display: inline-block;
+}
+
+.header-sec {
+    display: inline-block;
+    border-top: #AAAAAA solid 1px;
+    border-bottom: #AAAAAA solid 1px;
+}
+
+.li-cont {
+    cursor: pointer;
 }

@@ -10,7 +10,9 @@
 }
 
 .modal-body {
-    height: 100%;
+    padding-top: 18px;
+    max-height: 506px;
+    overflow: auto;
 }
 
 .modal-footer {
@@ -29,7 +31,7 @@
 
 .modal-title {
     font-size: 18px;
-    font-weight: 900;
+    font-weight: bold;
     color: #0091FF;
     font-family: 'Open Sans';
 }
@@ -48,32 +50,38 @@
 }
 
 .section-title {
-    font: bold 13px;
+    font: bold 13px 'Open Sans';
     color: #111111;
-    margin-bottom: 5px
 }
 
-.form-check-label {
-    margin: 3px
-}
 
 .sub-lable {
-    font: 11px;
+    font: 11px 'Open Sans';
     color: #888888;
 }
 
 .sub-section {
-    margin-right: 30px;
-    display: inline-block;
+    font: 13px 'Open Sans';
 }
 
-input[type='radio'] {
+.sub-section label {
+    font-family: 'Open Sans';
+}
+
+.radio {
     border: 1px solid #0091FF;
     border-radius: 50%;
+    height: 18px;
+    width: 18px;
+}
+
+input:checked {
+    height: 18px;
+    width: 18px;
 }
 
 select {
-    width: 384px;
+    width: 100%;
     height: 42px;
     border: 1px solid #DDDDDD;
     border-radius: 21px;
@@ -83,7 +91,7 @@ select {
 
 textarea {
     resize: none;
-    width: 804px;
+    width: 100%;
     height: 160px;
     border: 1px solid #DDDDDD;
     border-radius: 8px;
@@ -93,29 +101,89 @@ textarea {
 
 ::placeholder {
     color: #888888;
-    font: 13px;
+    font-size: 13px;
     opacity: 1;
-    margin-left: 100px
+    font-family: 'Open Sans';
+    padding-left: 12px;
+    padding-top: 6px;
+
 }
 
 .clrbut {
-    background: transparent;
-    color: #0091FF;
-    text-transform: uppercase;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0091FF;
+    border-radius: 24px;
     text-align: center;
-    border-radius: 10px;
-    border-color: #0091FF;
-    padding: 3px;
-    right: 0px;
+    font-family: 'Open Sans', sans-serif;
+    color: #0091FF;
+    font-size: 13px;
+    padding: 8.5px 12px;
+    background: transparent;
     float: right;
+    text-transform: uppercase;
 }
 
 .btnsecondary {
-    background: transparent;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0091FF;
+    border-radius: 24px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
     color: #0091FF;
-    border-color: #0091FF;
+    font-size: 13px;
+    padding: 8.5px 12px;
 }
 
-.btn primary {
+.btnsecondary svg {
+    float: left;
+}
+
+.btnsecondary svg {
+    float: left;
+}
+
+.btn .primary {
     color: #FFFFFF;
+}
+
+.btn-primary {
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #0091FF;
+    min-width: 25%;
+    text-transform: uppercase;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0091FF;
+    border-radius: 24px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    padding: 8.5px 12px;
+}
+
+.fa-solid,
+.fas {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 17px;
+    animation: spin 2s linear infinite;
+
+    float: right;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

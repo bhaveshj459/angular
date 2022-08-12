@@ -1,14 +1,8 @@
-
-#content {
-    position: relative;
-}
 #content div {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    
+    text-align: right;
 }
-img{
+
+img {
     width: 24px;
     height: 24px;
     background: transparent;

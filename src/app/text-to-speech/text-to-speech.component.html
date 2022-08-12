@@ -2,36 +2,36 @@
   <h5 class="modal-title">Text to Speech</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<div class="modal-body modal-dialog-scrollable row">
+<div class="modal-body row">
   <div class="body-sections">
 
     <div class="section-title">Engine</div>
-
-    <div class="sub-section">
-      <input type="radio" name="engine" id="engine" value="option1">
-      <label for="exampleRadios1"> Neural </label>
-      <div class="sub-lable"> Produces the most natural human-like speech possible</div>
-    </div>
-    <div class="" style=" display: inline-block">
-      <input type="radio" id="engine" value="standard" name="engine" checked>
-      <label for="neural"> Standard</label>
-      <div class="sub-lable"> Produces the most natural human-like speech possible</div>
+    <div class="row pt-3 ps-3">
+      <div class="sub-section col-6">
+        <input type="radio" name="engine" id="engine" value="option1" class="radio">
+        <label for="engine" class="form-check-label align-top ps-2"> Neural </label>
+        <div class="sub-lable"> Produces the most natural human-like speech possible</div>
+      </div>
+      <div class="sub-section col-6" style=" display: inline-block">
+        <input type="radio" id="engine" value="standard" name="engine" class="radio" checked>
+        <label for="neural" class="form-check-label align-top ps-2"> Standard</label>
+        <div class="sub-lable"> Produces the most natural human-like speech possible</div>
+      </div>
     </div>
   </div>
 
-  <div class="body-section">
-    <div class="sub-section">
-
-      <div class="section-title">Language</div>
+  <div class="body-section row mt-4">
+    <div class="sub-section col-6">
+      <div class="section-title pb-2">Language</div>
       <select name="Language" id="dropdown">
         <option value="English, US">English, US</option>
         <option value="English, UK">English, UK</option>
         <option value="Hindi, IND">Hindi, IND</option>
       </select>
     </div>
-    <div class="sub-section">
+    <div class="sub-section col-6">
 
-      <div class="section-title ">Voice</div>
+      <div class="section-title pb-2">Voice</div>
       <select name="voice" id="dropdown">
         <option value="Joanna, female">Joanna, Female</option>
         <option value="Jone, male">Jone, Male</option>
@@ -39,19 +39,37 @@
     </div>
   </div>
 
-  <div class="body-section">
-    <div class="section-title">Input</div>
+  <div class="body-section mt-4">
+    <div class="section-title pb-2">Input</div>
     <textarea name="input-text" placeholder="English, US" [(ngModel)]="text" maxlength="58"></textarea>
-    <div style="width: 804px;">
-
-      <div class="sub-lable" style="font-size: 13px ;display: inline-block ;"> {{58- text.length}} Characters remaining </div>
-      <button type="button" class="clrbut" (click)="clearText()">clear text</button>
+    <div class="mt-3 mb-5 ">
+      <div class="sub-lable d-inline-block" style="font-size: 13px;"> {{58- text.length}} Characters remaining </div>
+      <button type="button" class="clrbut" (click)="clearText()">clear text </button>
     </div>
   </div>
 
 
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
-  <button type="button" class="btn btn-primary"><i class="fa-solid fa-play" style="color: aliceblue;"></i> listen</button>
+  <div *ngIf="response">
+    <audio id="audioPlayer" [src]="downloadurl" (ended)="ended()"></audio>
+
+    <a [href]="downloadurl" type="button" class="button btn btnsecondary btn-download text-uppercase text-decoration-none">
+      <svg class="float-start" id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24">
+        <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none"></path>
+        <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff"></path>
+      </svg>
+      Download
+    </a>
+
+
+
+    <button type="button" class="btn btn-primary ms-3"> <i class="fa-solid fa-play float-start p-1" id="playIcon" *ngIf="!playState" (click)="onplay()"></i>
+      <i class="fa-solid fa-pause float-start p-1 " id="playIcon" *ngIf="playState" (click)="onpause()"> </i>
+
+      listen</button>
+  </div>
+  <div *ngIf="!response">
+    <button type="button" class="btn b btn-primary" (click)="convertText()" *ngIf="text.length!=0">convert <div class="loader" *ngIf="loading"></div></button>
+  </div>
 </div>

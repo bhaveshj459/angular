@@ -1,26 +1,37 @@
-img{
-    width: 24px;
-    height: 24px;
-    background: transparent;
-    opacity: 1;
-    mix-blend-mode: multiply;
-    right: 0;
+img {
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    height: 40px;
+    width: 40px;
+    padding: 0 5px;
 }
-.rotate{
+
+.rotate {
     transform: rotate(-90deg);
-    font: 26px/32px Oswald;
+    font-size: 24px;
+    font-family: 'Oswald';
+    font-weight: lighter;
     color: #AAAAAA;
     text-transform: uppercase;
     width: max-content;
-    height: 150px;
-
-    
+    margin-top: 24px;
+    height: 92px;
 }
-.sidebar{
 
+.sidebar {
     border-right: #AAAAAA solid 2px;
-    margin: 0%;
-    padding: 0%;
     height: 100%;
-    margin: 0%
+
+}
+
+.img-cover {
+    /* UI Properties */
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    align-content: center;
+    float: right;
+    margin-right: 4px;
+
 }

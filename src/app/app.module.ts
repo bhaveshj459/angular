@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TextToSpeechComponent } from './text-to-speech/text-to-speech.component';
 import { TextractComponent } from './textract/textract.component';
+import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { TextractComponent } from './textract/textract.component';
     PopupTextToSpeechComponent,
     TextToSpeechComponent,
     TextractComponent,
+    SpeechToTextComponent,
 
   ],
   entryComponents: [PopupTextToSpeechComponent],
