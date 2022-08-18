@@ -32,9 +32,10 @@
     <div class="sub-section col-6">
 
       <div class="section-title pb-2">Voice</div>
-      <select name="voice" id="dropdown">
-        <option value="Joanna, female">Joanna, Female</option>
-        <option value="Jone, male">Jone, Male</option>
+      <select name="voice" id="dropdown" [(ngModel)]="speaker">
+        <option value="Amy">Amy, Female</option>
+        <option value="Joanna">Joanna, Female</option>
+        <option value="Matthew">Matthew, Male</option>
       </select>
     </div>
   </div>

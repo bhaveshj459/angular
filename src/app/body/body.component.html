@@ -40,8 +40,10 @@
         <ul type="none">
           <div class="cardtitle">{{data.title}}</div>
 
-          <li *ngFor="let api of data.value" data-bs-toggle="modal" data-bs-target="#exampleModal" class="li-cont">
-            {{api}}
+          <li *ngFor="let api of data.value" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <a [routerLink]="api.link" style="text-decoration: none;" class="li-cont">
+              {{api.title}}
+            </a>
           </li>
         </ul>
 

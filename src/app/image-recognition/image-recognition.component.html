@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <h5 class="modal-title">Object Recognition from Image</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="body-sections">
+        <div class="modal-body">
+            <div class="row">
+
+                <!-- Document body -->
+                <div class="col-sm-6">
+                    <div class="section-title">Document Name</div>
+                    <div class="image-section">
+                        <img [src]="url" alt="">
+                    </div>
+                    <div class="row buttondiv">
+                        <select name="image-file" id="dropdown" class="col-6 modal-select modal-select-sm c-0">
+                            <option value="null">Choose Sample Document</option>
+                            <option value="English, UK">English, UK</option>
+                            <option value="Hindi, IND">Hindi, IND</option>
+                        </select>
+                        <input type="file" id="imagfile" (change)="selectFile($event)" class="custom-file-input" placeholder="Upload Document" hidden><label for="imagfile" class="filelabel col-6">Upload Document</label>
+                    </div>
+                </div>
+
+                <!-- Result Body -->
+                <div class="col-6" style="border-left: 1px solid #EEEEEE">
+                    <div class="col">
+                        <div class="search col" style="display: inline-block;">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search for a Label...">
+                        </div>
+                    </div>
+                    <div class="search-lable">
+                        Check whether we support your label
+                    </div>
+                    <div class="fs-13 text-primary fw-bold mt-4 mb-20p">Results</div>
+                    <table class="table fs-13" id="image_recognition">
+                        <tbody class="c-0">
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Human</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Object</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                            <tr>
+                                <td>Person</td>
+                                <td class="text-end">99%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
+    <button type="button" class="btn btnprimary">RESET DEMO</button>
+</div>

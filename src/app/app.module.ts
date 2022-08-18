@@ -14,6 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TextToSpeechComponent } from './text-to-speech/text-to-speech.component';
 import { TextractComponent } from './textract/textract.component';
 import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component';
+import { ComprehendComponent } from './comprehend/comprehend.component';
+import { ImageRecognitionComponent } from './image-recognition/image-recognition.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component
     TextToSpeechComponent,
     TextractComponent,
     SpeechToTextComponent,
+    ComprehendComponent,
+    ImageRecognitionComponent,
 
   ],
   entryComponents: [PopupTextToSpeechComponent],

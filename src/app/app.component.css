@@ -45,3 +45,9 @@ hr {
 .footer {
     padding: 20px;
 }
+
+.modal-body {
+    height: auto;
+    max-height: 540px;
+    overflow: auto;
+}

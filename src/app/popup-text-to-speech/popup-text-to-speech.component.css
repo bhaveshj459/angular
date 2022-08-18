@@ -30,7 +30,7 @@ a.active {
 
 .nav {
     border-right: 2px solid #EEEEEE;
-    height: 104%;
+    height: 638px;
 
 }
 
@@ -42,7 +42,9 @@ a.active {
 }
 
 .modal-body {
-    height: 100%;
+    padding-top: 18px;
+    max-height: 540px;
+    overflow: auto;
 }
 
 .modal-footer {

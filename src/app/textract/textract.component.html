@@ -57,13 +57,13 @@
                     </div>
 
                     <div class="tab-pane fade" id="forms" role="tabpanel" aria-labelledby="forms-tab">
-                        <div class="search forms">
-                            <i class="fa fa-search"></i>
+                        <div class="search forms mb-4">
+                            <i class=" fa fa-search"></i>
                             <input type="text" class="form-control" placeholder="Search..." style="width: 100%;">
                         </div>
 
-                        <div>
-                            <div class="forms-tab-cards" *ngFor="let data of formsCardsData">
+                        <div class="row">
+                            <div class="forms-tab-cards col-6" *ngFor="let data of formsCardsData">
                                 <div class="forms-tab-cards-heading">{{data.heading}}</div>
                                 <div class="forms-tab-cards-body">{{data.data}}</div>
                             </div>

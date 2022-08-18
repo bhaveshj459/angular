@@ -15,6 +15,7 @@ export class TextToSpeechComponent implements OnInit {
   response: boolean = false;
   downloadurl: any;
   loading: boolean = false;
+  speaker: string = "";
 
   playState: boolean = false;
   constructor() { }
@@ -28,7 +29,9 @@ export class TextToSpeechComponent implements OnInit {
 
   convertText() {
     if (this.text.length > 1) {
-      let fetchUrl = "https://it2c947od4.execute-api.us-east-1.amazonaws.com/prod/steve?user_id=mreader&speaker=Amy&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10&str=" + this.text;
+
+      console.log(this.speaker);
+      let fetchUrl = "https://it2c947od4.execute-api.us-east-1.amazonaws.com/prod/steve?user_id=mreader&speaker=" + this.speaker + "&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10&str=" + this.text;
       this.loading = true;
 
       console.log(this.loading)

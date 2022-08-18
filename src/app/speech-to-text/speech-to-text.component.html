@@ -1,19 +1,410 @@
 <div class="modal-header">
-    <h5 class="modal-title">Text to Speech Demonstration</h5>
+    <h5 class="modal-title">Speech To Text Demonstration</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<div class="modal-body modal-dialog-scrollable">
+<div class="modal-body">
     <div class="body-sections">
         <div class="row">
             <div class="col-sm-6">
                 <div class="section-title">Transcription Output</div>
                 <div class="image-section">
-
+                    <p class="p-3 para"> Click <b>Start Transcribing</b> below to begin a real-time transcription of what you speak into your microphone</p>
+                </div>
+                <div class="row mt-3">
+                    <div class="col pe-0 my-auto">
+                        <p class="but-lable">Current language: <strong> English, US</strong></p>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="button button-sm" onclick="startRecording()"><i class="fa-solid fa-microphone pe-1"></i>
+                            START TRANSCRIBING
+                        </button>
+                    </div>
                 </div>
 
             </div>
             <div class="col-sm-6 rightsec">
                 <div class="section-title">Settings</div>
+                <div class="accordion" id="accordionExample">
+                    <!-- Language Setting -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lang-tab" aria-expanded="false" aria-controls="language-settings">
+                                Language Settings
+                            </button>
+                        </h2>
+                        <div id="lang-tab" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="accordion-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <input class="radio align-top" type="radio" name="language" value="specific" id="flexRadioDefault1" checked="">
+                                        </div>
+                                        <div>
+                                            <label class="form-check-label align-top fw-semibold ps-2" for="flexRadioDefault1">
+                                                Specific language
+                                            </label>
+                                            <div class="form-info ps-2">If you know the language spoken in your source
+                                                audio,
+                                                choose this option to get the most accurate results.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-18p">
+                                        <input class="radio align-top" type="radio" name="language" value="automatic" id="flexRadioDefault2">
+                                        <div class="d-inline-block">
+                                            <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="flexRadioDefault2">
+                                                Automatic language identification
+                                            </label>
+                                            <div class="form-info ps-2">
+                                                Produces natural-sounding speech
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-4">
+                                        <label for="chooseLanguage" class="fw-bold mb-1">Choose Language</label>
+                                        <select name="chooseLanguage" id="chooseLanguage" class="modal-select modal-select-sm c-0">
+                                            <option value="cn">Chinese, CN (zh-CN)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Audio Settings -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#audiotab" aria-expanded="false" aria-controls="audiotab">
+                                Audio Settings
+                            </button>
+                        </h2>
+                        <div id="audiotab" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+
+                            <div class="accordion-body">
+                                <label class="d-inline-block form-check-label fw-semibold" for="speakerIdentification">
+                                    Speaker identification
+                                </label>
+                                <div class="d-inline-block float-end">
+                                    <label class="switch">
+                                        <input type="checkbox" id="speakerIdentification">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="form-info mt-1 mb-2">
+                                    Identify the different speakers in the stream. Speaker identification might vary in
+                                    availability between languages.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Removal Settings -->
+
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-removal-settings-tab" aria-expanded="false" aria-controls="content-removal-settings">
+                                Content Removal Settings
+                            </button>
+                        </h2>
+                        <div id="content-removal-settings-tab" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+
+                                <!-- Vocabulary filtering -->
+                                <div class="mb-4">
+                                    <label class="d-inline-block c-0 fw-semibold" for="Vocabulary_filtering">
+                                        Vocabulary filtering
+                                    </label>
+                                    <div class="d-inline-block float-end">
+                                        <label class="switch">
+                                            <input type="checkbox" id="Vocabulary_filtering" data-bs-toggle="collapse" data-bs-target="#filter" aria-expanded="false" aria-controls="filter" class="collapsed">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-info mt-1">
+                                        Vocabulary filtering removes, masks, or tags words that you specify in your
+                                        vocabulary filter. Choose a vocabulary filter to see an example.
+                                    </div>
+
+                                    <div class="mt-3 collapse" id="filter" style>
+                                        <label class="d-inline-block fw-semibold" for="Vocabulary_filtering">
+                                            Filter selection
+                                        </label>
+                                        <div class="form-info mt-1">
+                                            The vocabulary filters shown here are based on your language settings. You
+                                            can choose up to one vocabulary filter per language.
+                                        </div>
+                                        <select name="filterSelection" id="" class="modal-select modal-select-sm mt-12p">
+                                            <option value="">Choose a Vocabulary filter...</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- PII identification -->
+                                <div class="mb-4">
+                                    <label class="d-inline-block c-0 fw-semibold" for="identification_redaction">
+                                        PII Identification &amp; redaction
+                                    </label>
+                                    <div class="d-inline-block float-end">
+                                        <label class="switch">
+                                            <input type="checkbox" id="identification_redaction" data-bs-toggle="collapse" data-bs-target="#identification_section" aria-expanded="false" aria-controls="identification_section" class="collapsed">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-info mt-1 mb-2">
+                                        Identify or redact one or more types of personally identifiable information
+                                        (PII) in your transcript
+                                    </div>
+
+                                    <div class="mt-3 collapse" id="identification_section">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="identification" value="identification_only" id="identification_only" checked="">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="identification_only">
+                                                    Identification only
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Label the type of PII identified but not redact it in the
+                                                    transcription output
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="identification" value="identificationRedaction" id="identificationRedaction">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="identificationRedaction">
+                                                    Identification &amp; redaction
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Label the type of PII and also mask the content with the PII entity
+                                                    type in the transcription output. For example, (123)456-7890 will be
+                                                    masked as [PHONE]
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="mb-2">Select all entity types(<span id="selected_checks">{{countP1 + countP2}}</span> of 11 selected)</div>
+                                            <div class="form-check-box">
+
+                                                <ul class="list-group list-group-flush" id="tree">
+                                                    <li class="list-group-item ps-0">
+
+                                                        <input type="checkbox" name="all" id="select_all" [(ngModel)]="selectAll" (change)="toggleChanges()">
+                                                        <label for="select_all">Select All</label>
+
+                                                        <ul class="list-group list-group-flush pt-2">
+                                                            <li class="list-group-item ps-4 border-0 tree-child">
+
+                                                                <input type="checkbox" name="all" id="financial0" [(ngModel)]="financial" (change)="calcTotalClicked()" [checked]="financial">
+                                                                <label for="financial0" id="financial_checks0">Financial(<span>{{countP1}}</span> of 6 selected)</label>
+
+                                                                <ul class="list-group list-group-flush pt-1" id="financial_list">
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="account_number" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="account_number" class="text-uppercase">Bank_account_number</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="bank_routing" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="bank_routing" class="text-uppercase">Bank_Routing</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="credit_debit_number" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="credit_debit_number" class="text-uppercase">credit_debit_number</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="credit_debit_cvv" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="credit_debit_cvv" class="text-uppercase">credit_debit_cvv</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="credit_debit_expiry" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="credit_debit_expiry" class="text-uppercase">credit_debit_expiry</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="pin" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <label for="pin" class="text-uppercase">pin</label>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </li>
+
+                                                            <li class="list-group-item ps-4 tree-child">
+
+                                                                <input type="checkbox" name="all" id="financial1" [(ngModel)]="financial0" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                <label for="financial1" id="financial_checks1">Financial(<span>{{countP2}}</span> of 5 selected)</label>
+
+                                                                <ul class="list-group list-group-flush pt-1" id="financial1_list">
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="name" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <label for="name" class="text-uppercase">name</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="address" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <label for="address" class="text-uppercase">address</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="phone" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <label for="phone" class="text-uppercase">phone</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="email" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <label for="email" class="text-uppercase">email</label>
+                                                                    </li>
+                                                                    <li class="list-group-item ps-4 border-0">
+                                                                        <input type="checkbox" name="all" id="ssn" [checked]="financial0">
+                                                                        <label for="ssn" class="text-uppercase" (change)="calcTotalClicked()">ssn</label>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customizations -->
+
+                    <div class="accordion-item">
+                        <p class="accordion-header" id="headingFour">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Customizations
+                            </button>
+                        </p>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <!-- custom vocabulary -->
+                                <div>
+                                    <label class="d-inline-block c-0 fw-semibold" for="custom_vocabulary">
+                                        Custom Vocabulary
+                                    </label>
+                                    <div class="d-inline-block float-end">
+                                        <label class="switch">
+                                            <input type="checkbox" id="custom_vocabulary" data-bs-toggle="collapse" data-bs-target="#vocabulary_selection" aria-expanded="false" aria-controls="vocabulary_selection" class="collapsed">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-info mt-1 mb-2">
+                                        A custom vocabulary improves the accuracy of recognizing words and phrases
+                                        specific to your usecase.
+                                    </div>
+
+                                    <div class="mt-3 collapse" id="vocabulary_selection">
+                                        <label class="d-inline-block" for="vocabulary_selection">
+                                            Vocabulary selection
+                                        </label>
+                                        <div class="form-info mt-1">
+                                            The vocabulary shown here are based on your language settings. You
+                                            can choose up to one vocabulary per language.
+                                        </div>
+                                        <select name="vocabulary_selection" id="" class="modal-select modal-select-sm mt-12p">
+                                            <option value="">Choose a Vocabulary filter...</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Partial result stabilization -->
+                                <div class="mt-3">
+                                    <label class="d-inline-block c-0 fw-semibold" for="stabilization">
+                                        Partial result stabilization
+                                    </label>
+                                    <div class="d-inline-block float-end">
+                                        <label class="switch">
+                                            <input type="checkbox" id="stabilization" data-bs-toggle="collapse" data-bs-target="#result_stabilization" aria-expanded="false" aria-controls="result_stabilization" class="collapsed">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-info mt-1 mb-2">
+                                        Configure Amazon Transcribe to present results that don't change as it process
+                                        the transcription output from your stream.
+                                    </div>
+
+                                    <div class="mt-3 collapse" id="result_stabilization">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="stabilization" value="high" id="high" checked="">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2" for="high">
+                                                    High
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Provides the most stable partial transcript results with lower
+                                                    accuracy compared to the Medium and Low settings.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="stabilization" value="medium" id="medium">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2" for="medium">
+                                                    Medium
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Provides partial transcription results that have a balance between
+                                                    stability and accuracy.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="stabilization" value="low" id="low">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2" for="low">
+                                                    Low
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Provides the relatively less stable partial transcription result
+                                                    with higher accuracy compared to the High and Medium settings.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Custom language model -->
+                                <div class="mt-3">
+                                    <label class="d-inline-block c-0 fw-semibold" for="custom_language">
+                                        Custom language model
+                                    </label>
+                                    <div class="d-inline-block float-end">
+                                        <label class="switch">
+                                            <input type="checkbox" id="custom_language" data-bs-toggle="collapse" data-bs-target="#model_selection" aria-expanded="false" aria-controls="model_selection" class="collapsed">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-info mt-1 mb-2">
+                                        Select the model you want to use with this streaming session.
+                                    </div>
+
+                                    <div class="mt-3 collapse" id="model_selection">
+                                        <label class="d-inline-block" for="model_selection">
+                                            Custom model selection
+                                        </label>
+                                        <div class="form-info mt-1">
+                                            The models shown here are based on your language settings. You
+                                            can choose up to one model per language.
+                                        </div>
+                                        <select name="model_selection" id="" class="modal-select modal-select-sm mt-12p">
+                                            <option value="">Choose Model...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
