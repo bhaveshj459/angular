@@ -25,14 +25,12 @@
       <div class="section-title pb-2">Language</div>
       <select name="Language" id="dropdown">
         <option value="English, US">English, US</option>
-        <option value="English, UK">English, UK</option>
-        <option value="Hindi, IND">Hindi, IND</option>
       </select>
     </div>
     <div class="sub-section col-6">
 
       <div class="section-title pb-2">Voice</div>
-      <select name="voice" id="dropdown" [(ngModel)]="speaker">
+      <select name="voice" id="dropdown" [(ngModel)]="speaker" (change)="changeevent($event)">
         <option value="Amy">Amy, Female</option>
         <option value="Joanna">Joanna, Female</option>
         <option value="Matthew">Matthew, Male</option>

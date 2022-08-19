@@ -11,6 +11,7 @@ export class BodyComponent implements OnInit {
   api: number = 160;
   plat: number = 24;
   res: number = 200;
+  searchinput: string = '';
 
   systemAndSecurity: string[] = ["Firewall", "Registry", "Services"];
   networkandinternet: string[] = ["WiFi and Bluetooth Radio", "WiFi Profiles", "IP Printer"];
@@ -125,11 +126,22 @@ export class BodyComponent implements OnInit {
     }],
     color: "#000000"
   },];
-
+  viewdata = this.database;
   constructor() { }
 
 
   ngOnInit() {
   }
 
+  searchFilter() {
+    // var input, filter, ul, li, a, i, txtValue;
+    var input: any = document.getElementById("search");
+    if (this.searchinput.length > 1) {
+      let filterArray = this.database.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()))
+      this.viewdata = filterArray;
+    }
+    else {
+      this.viewdata = this.database
+    }
+  }
 }

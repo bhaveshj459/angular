@@ -23,7 +23,7 @@
 
   <div class="search-seaction">
     <section> Search for an API </section>
-    <input type="text" id="search" placeholder="Enter an API">
+    <input type="text" id="search" [(ngModel)]="searchinput" placeholder="Enter an API" (keyup)="searchFilter()">
 
   </div>
 
@@ -36,7 +36,7 @@
   <div>
     <div class="rows">
 
-      <div class="cards" *ngFor="let data of database" [style.border-color]="data.color">
+      <div class="cards" *ngFor="let data of viewdata" [style.border-color]="data.color">
         <ul type="none">
           <div class="cardtitle">{{data.title}}</div>
 

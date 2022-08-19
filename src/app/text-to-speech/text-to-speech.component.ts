@@ -15,7 +15,7 @@ export class TextToSpeechComponent implements OnInit {
   response: boolean = false;
   downloadurl: any;
   loading: boolean = false;
-  speaker: string = "";
+  speaker: string = "Amy";
 
   playState: boolean = false;
   constructor() { }
@@ -66,5 +66,8 @@ export class TextToSpeechComponent implements OnInit {
 
   ended() {
     this.playState = false;
+  }
+  changeevent($event: any) {
+    console.log("")
   }
 }
