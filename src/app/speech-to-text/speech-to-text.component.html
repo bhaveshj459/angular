@@ -192,38 +192,38 @@
                                                 <ul class="list-group list-group-flush" id="tree">
                                                     <li class="list-group-item ps-0">
 
-                                                        <input type="checkbox" name="all" id="select_all" [(ngModel)]="selectAll" (change)="toggleChanges()">
+                                                        <input type="checkbox" name="all" id="select_all" [(ngModel)]="selectAll" (change)="toggleChanges()" [checked]="selectAll">
                                                         <label for="select_all">Select All</label>
 
-                                                        <ul class="list-group list-group-flush pt-2">
+                                                        <ul class="list-group list-group-flush pt-2" id="parentUl">
                                                             <li class="list-group-item ps-4 border-0 tree-child">
 
-                                                                <input type="checkbox" name="all" id="financial0" [(ngModel)]="financial" (change)="calcTotalClicked()" [checked]="financial">
+                                                                <input type="checkbox" name="all" id="financial0" [(ngModel)]="financial" (change)="selectAllSubParent()" [checked]="financial">
                                                                 <label for="financial0" id="financial_checks0">Financial(<span>{{countP1}}</span> of 6 selected)</label>
 
                                                                 <ul class="list-group list-group-flush pt-1" id="financial_list">
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="account_number" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="account_number" (change)="calcTotalClicked()">
                                                                         <label for="account_number" class="text-uppercase">Bank_account_number</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="bank_routing" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="bank_routing" (change)="calcTotalClicked()">
                                                                         <label for="bank_routing" class="text-uppercase">Bank_Routing</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="credit_debit_number" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="credit_debit_number" (change)="calcTotalClicked()">
                                                                         <label for="credit_debit_number" class="text-uppercase">credit_debit_number</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="credit_debit_cvv" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="credit_debit_cvv" (change)="calcTotalClicked()">
                                                                         <label for="credit_debit_cvv" class="text-uppercase">credit_debit_cvv</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="credit_debit_expiry" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="credit_debit_expiry" (change)="calcTotalClicked()">
                                                                         <label for="credit_debit_expiry" class="text-uppercase">credit_debit_expiry</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="pin" [checked]="financial" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="pin" (change)="calcTotalClicked()">
                                                                         <label for="pin" class="text-uppercase">pin</label>
                                                                     </li>
                                                                 </ul>
@@ -232,29 +232,29 @@
 
                                                             <li class="list-group-item ps-4 tree-child">
 
-                                                                <input type="checkbox" name="all" id="financial1" [(ngModel)]="financial0" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                <input type="checkbox" name="all" id="financial1" [(ngModel)]="financial0" (change)="selectAllSubParent()" [checked]="financial0">
                                                                 <label for="financial1" id="financial_checks1">Financial(<span>{{countP2}}</span> of 5 selected)</label>
 
                                                                 <ul class="list-group list-group-flush pt-1" id="financial1_list">
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="name" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="name" (change)="calcTotalClicked()">
                                                                         <label for="name" class="text-uppercase">name</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="address" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="address" (change)="calcTotalClicked()">
                                                                         <label for="address" class="text-uppercase">address</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="phone" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="phone" (change)="calcTotalClicked()">
                                                                         <label for="phone" class="text-uppercase">phone</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="email" [checked]="financial0" (change)="calcTotalClicked()">
+                                                                        <input type="checkbox" name="all" id="email" (change)="calcTotalClicked()">
                                                                         <label for="email" class="text-uppercase">email</label>
                                                                     </li>
                                                                     <li class="list-group-item ps-4 border-0">
-                                                                        <input type="checkbox" name="all" id="ssn" [checked]="financial0">
-                                                                        <label for="ssn" class="text-uppercase" (change)="calcTotalClicked()">ssn</label>
+                                                                        <input type="checkbox" name="all" id="ssn" (change)="calcTotalClicked()">
+                                                                        <label for="ssn" class="text-uppercase">ssn</label>
                                                                     </li>
                                                                 </ul>
 
