@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { elementAt } from 'rxjs';
 import { PopupTextToSpeechComponent } from '../popup-text-to-speech/popup-text-to-speech.component'
 
 
@@ -8,6 +9,8 @@ import { PopupTextToSpeechComponent } from '../popup-text-to-speech/popup-text-t
   styleUrls: ['./body.component.css']
 })
 export class BodyComponent implements OnInit {
+
+
   api: number = 160;
   plat: number = 24;
   res: number = 200;
@@ -127,18 +130,57 @@ export class BodyComponent implements OnInit {
     color: "#000000"
   },];
   viewdata = this.database;
+  @Input() sort = 0;
   constructor() { }
 
-
   ngOnInit() {
+    console.log(this.sort);
+    if (this.sort == 1) {
+      this.database.sort((a, b) => {
+        const nameA = a.title.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.title.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+    }
+    else if (this.sort == -1) {
+      this.database.sort((a, b) => {
+        const nameA = a.title.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.title.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+    }
   }
 
   searchFilter() {
     // var input, filter, ul, li, a, i, txtValue;
     var input: any = document.getElementById("search");
     if (this.searchinput.length > 1) {
-      let filterArray = this.database.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()))
+      // debugger;
+      let filterArray = this.database
+        .map((element) => ({
+          ...element,
+          value: element.value.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()))
+        }))
+        .filter(data => data.value.length > 0);
+
       this.viewdata = filterArray;
+
     }
     else {
       this.viewdata = this.database
