@@ -40,3 +40,127 @@
     color: #FFFFFF;
     text-transform: uppercase;
 }
+
+/* CodeMirror */
+/* Codemirror */
+.HTMLContainer,
+.HTMLContainer2,
+.HTMLContainer3,
+.HTMLContainer4,
+.HTMLContainer5,
+.HTMLContainer6,
+.HTMLContainer7,
+.HTMLContainer8,
+.HTMLContainer9,
+.HTMLContainer10 {
+    margin-top: 21px;
+    width: 100%;
+    min-height: 374px;
+    border: 1px solid #DDDDDD;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+    padding-right: 12px;
+}
+
+.CodeMirror {
+    height: 374px !important;
+}
+
+.CodeMirror-vscrollbar {
+    width: 0px;
+}
+
+.line span {
+    content: "";
+    display: inline-block;
+    width: 35px;
+    height: 3px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.textarea {
+    border: 1px solid #DDDDDD;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #888888;
+}
+
+.pt-12 {
+    padding-top: 12px;
+}
+
+.button-sm-primary {
+    background: #0091FF;
+    color: #FFFFFF;
+}
+
+.button-sm {
+    padding: 6px 14px;
+}
+
+.button {
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0091FF;
+    border-radius: 24px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #0091FF;
+    font-size: 13px;
+    padding: 8.5px 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.button-sm-primary {
+    background: #0091FF;
+    color: #FFFFFF;
+}
+
+.result-tab .nav-item .active {
+    border-bottom: 4px solid #0091FF;
+}
+
+.nav-link {
+    color: #111111 !important;
+}
+
+.form-info {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    color: #888888;
+}
+
+.mb-36p {
+    margin-bottom: 36px;
+}
+
+.mt-13p {
+    margin-top: 13px;
+}
+
+.nav-link-active {
+    background: #DDDDDD;
+    border-radius: 50%;
+}
+
+.modal-input {
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 21px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    width: 100%;
+    padding: 6px 1em 6px 3em;
+    background: transparent no-repeat 13px center;
+}
+
+.search .fa-search {
+    position: absolute;
+    top: 7px;
+    left: 16px;
+}

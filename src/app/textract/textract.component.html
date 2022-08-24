@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="search col" style="display: inline-block;">
                                 <i class="fa fa-search"></i>
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="rowTextInput" (keyup)="rowTextSearchFilter()">
                             </div>
                             <select name="out-text" id="dropdown" class="output-text col-auto" style="display: inline-block;">
                                 <option value="null">Segment by line</option>
@@ -50,6 +50,7 @@
                             </select>
                         </div>
                         <div class="container m-2 mt-4">
+                            <div class="text-center m-2 p-2" *ngIf="tags.length == 0">No Matching Records Found</div>
                             <div class="tags" *ngFor="let tag of tags">{{tag}}
 
                             </div>
@@ -59,9 +60,9 @@
                     <div class="tab-pane fade" id="forms" role="tabpanel" aria-labelledby="forms-tab">
                         <div class="search forms mb-4">
                             <i class=" fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;">
+                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;" [(ngModel)]="formsInput" (keyup)="formsSearchFilter()">
                         </div>
-
+                        <div class="text-center m-2 p-2" *ngIf="formsCardsData.length == 0">No Matching Records Found</div>
                         <div class="row">
                             <div class="forms-tab-cards col-6" *ngFor="let data of formsCardsData">
                                 <div class="forms-tab-cards-heading">{{data.heading}}</div>
@@ -75,9 +76,10 @@
                     <div class="tab-pane fade" id="tables" role="tabpanel" aria-labelledby="tables-tab">
                         <div class="search forms">
                             <i class="fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;">
+                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;" [(ngModel)]="tableInput" (keyup)="tableSearchFilter()">
                         </div>
-                        <table style="width: 100%; margin-top: 30px;">
+                        <div class="text-center m-2 p-2" *ngIf="tableData.length == 0">No Matching Records Found</div>
+                        <table style="width: 100%; margin-top: 30px;" *ngIf="tableData.length!=0">
                             <thead>
                                 <tr>
                                     <th scope="col">Item</th>
@@ -87,29 +89,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td scope="row">Latte Macchiato</td>
-                                    <td>2</td>
-                                    <td>4.50</td>
-                                    <td>9.00</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Gloki</td>
-                                    <td>1</td>
-                                    <td>5.00</td>
-                                    <td>5.00</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Schweinschnitzel</td>
-                                    <td>1</td>
-                                    <td>22.00</td>
-                                    <td>22.00</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Chasspatzli</td>
-                                    <td>1</td>
-                                    <td>18.50</td>
-                                    <td>18.50</td>
+                                <tr *ngFor="let items of tableData">
+                                    <td scope="row">{{items.Item}} </td>
+                                    <td>{{items.Qty}}</td>
+                                    <td>{{items.Price}}</td>
+                                    <td>{{items.Qty * items.Price}} </td>
                                 </tr>
 
                         </table>
@@ -118,22 +102,17 @@
                     <div class="tab-pane fade" id="queries" role="tabpanel" aria-labelledby="queries-tab">
                         <div class="search forms">
                             <i class="fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Enter a search query..." style="width: 260px; display: inline-block; height: 30px;">
+                            <input type="text" class="form-control" placeholder="Enter a search query..." style="width: 260px; display: inline-block; height: 30px;" [(ngModel)]="queryInput" (keyup)="querySearchFilter()">
                             <button type="button" class="btns btnsecondary">Submit</button>
                         </div>
                         <h3 class="label-query"><b> Note:</b> Limit of 200 characters per query. Duplicate queries not permitted</h3>
 
-                        <div class="query-sub-body">
-                            <h3 class="query-sub-heading"> What is the item name?
-                                <label class="query-sub-heading-lable">Alias: Name</label>
+                        <div class="text-center m-2 p-2" *ngIf="queryData.length == 0">No Matching Records Found</div>
+                        <div class="query-sub-body" *ngFor="let query of queryData">
+                            <h3 class="query-sub-heading"> {{query.ques}}?
+                                <label class="query-sub-heading-lable">Alias: {{query.alias}}</label>
                             </h3>
-                            <div class="query-sub-cont">4572</div>
-                        </div>
-                        <div class="query-sub-body">
-                            <h3 class="query-sub-heading"> What is the item name?
-                                <label class="query-sub-heading-lable">Alias: Name</label>
-                            </h3>
-                            <div class="query-sub-cont">4572</div>
+                            <div class="query-sub-cont">{{query.ans}}</div>
                         </div>
 
                     </div>

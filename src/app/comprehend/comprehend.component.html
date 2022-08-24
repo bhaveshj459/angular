@@ -4,11 +4,760 @@
 </div>
 <div class="modal-body">
     <div class="body-sections">
+        <form action="#" enctype="multipart/form-data" id="popupForm">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <label for="comprehendTextarea1" class="text-primary fw-bold open-sans pb-2">
+                            Input Text
+                        </label>
+                        <textarea name="input_text" class="form-control textarea px-3 pt-12 " id="comprehendTextarea1" rows="6" placeholder="English, US" maxlength="685" [(ngModel)]="comprehendTextarea1" required="">
+                </textarea>
+                    </div>
+                </div>
+                <div class="mt-3 mb-36p d-flex justify-content-between">
+                    <div class="form-info d-inline-block" style="font-size: 13px;"><span id="inputLength">{{ 685 - comprehendTextarea1.length}}</span> Characters
+                        remaining
+                    </div>
+                    <div class="d-inline-block">
+                        <button type="button" class="text-uppercase button button-sm me-2" (click)="clearText()">Clear
+                            text</button>
+                        <button type="button" class="text-uppercase button button-sm button-sm-primary px-22p">ANALYZE</button>
+                    </div>
+                </div>
 
+                <div>
+                    <div class="fs-13 text-primary fw-bold mb-2">Insights</div>
+                    <div class="result-tab">
+                        <ul class="nav nav-fill fs-13 fw-bold border-bottom mb-4" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#entities-text-tab-pane" role="tab" area-controls="entities-text-tab-pane" aria-selected="true">Entities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#key-phrases-tab-pane" role="tab" area-controls="key-phrases-tab-pane" aria-selected="false">Key phrases</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#languages-tab-pane" role="tab" aria-controls="languages-tab-pane" aria-selected="false">languages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#pii-tab-pane" role="tab" aria-controls="pii-tab-pane" aria-selected="false">PII</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#sentiment-tab-pane" role="tab" aria-controls="sentiment-tab-pane" aria-selected="false">Sentiment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#syntax-tab-pane" role="tab" aria-controls="syntax-tab-pane" aria-selected="false">Syntax</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab content -->
+                        <div class="tab-content" id="comprehend-tab">
+
+                            <!-- table pan first -->
+                            <div class="tab-pane show active" id="entities-text-tab-pane" role="tabpanel">
+                                <div>
+                                    <label for="comprehendTextarea2" class="fw-bold open-sans pb-2">
+                                        Analyzed Text
+                                    </label>
+                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" rows="6" placeholder="English, US" maxlength="685" disabled="">{{comprehendTextarea1}}</textarea>
+                                </div>
+
+                                <div class="fs-13 text-primary fw-bold mt-5">Results</div>
+                                <div class="row my-4">
+                                    <div class="col-6">
+                                        <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="nav pgn fw-bold float-end">
+                                            <li class="nav-item">
+                                                <a routerLink="/comprehend" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a routerLink="/comprehend" class="nav-link nav-link-active">1</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a routerLink="/comprehend" class="nav-link">2</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">3</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <table class="table fs-13" id="object_recognition">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0">Entity</th>
+                                                <th class="border-0">Type</th>
+                                                <th class="text-end border-0">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="c-0">
+                                            <tr>
+                                                <td>explain how you</td>
+                                                <td class="line"><span class="bg-primary"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>mistaken idea of denouncing</td>
+                                                <td class="line"><span class="bg-warning"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>expounding the actual teachings</td>
+                                                <td class="line"><span class="bg-danger"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>great explorer of the truth</td>
+                                                <td class="line"><span class="bg-success"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>explain how you</td>
+                                                <td class="line"><span class="bg-info"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>mistaken idea of denouncing</td>
+                                                <td class="line"><span class="bg-dark"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>expounding the actual teachings</td>
+                                                <td class="line"><span class="bg-primary"></span> Person</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold mt-5">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+                                    <div class="row mb-3">
+                                        <div class="col-6" style="padding-right: 17.5px;">
+                                            <div class="HTMLContainer fs-11">
+                                            </div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                        <div class="col-6" style="padding-left: 17.5px;">
+                                            <div class="HTMLContainer2 fs-11">
+                                                <div class="CodeMirror cm-s-default CodeMirror-wrap">
+                                                    <div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div>
+                                                    <div class="CodeMirror-vscrollbar" cm-not-content="true">
+                                                        <div style="min-width: 1px; height: 0px;"></div>
+                                                    </div>
+                                                    <div class="CodeMirror-hscrollbar" cm-not-content="true">
+                                                        <div style="height: 100%; min-height: 1px; width: 0px;"></div>
+                                                    </div>
+                                                    <div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div>
+                                                    <div class="CodeMirror-gutter-filler" cm-not-content="true"></div>
+                                                    <div class="CodeMirror-scroll" tabindex="-1">
+                                                        <div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -17px; border-right-width: 13px; min-height: 25px; padding-right: 0px; padding-bottom: 0px;">
+                                                            <div style="position: relative; top: 0px;">
+                                                                <div class="CodeMirror-lines">
+                                                                    <div style="position: relative; outline: none;">
+                                                                        <div class="CodeMirror-measure">
+                                                                            <pre><span>xxxxxxxxxx</span></pre>
+                                                                            <div class="CodeMirror-linenumber CodeMirror-gutter-elt">
+                                                                                <div>1</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="CodeMirror-measure"></div>
+                                                                        <div style="position: relative; z-index: 1;"></div>
+                                                                        <div class="CodeMirror-cursors">
+                                                                            <div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 16.5px;">&nbsp;</div>
+                                                                        </div>
+                                                                        <div class="CodeMirror-code">
+                                                                            <div style="position: relative;">
+                                                                                <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                                                                                    <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div>
+                                                                                </div>
+                                                                                <pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="position: absolute; height: 13px; width: 1px; border-bottom: 0px solid transparent; top: 25px;"></div>
+                                                        <div class="CodeMirror-gutters" style="height: 38px;">
+                                                            <div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table pan second -->
+                            <div class="tab-pane" id="key-phrases-tab-pane" role="tabpanel">
+                                <div>
+                                    <label for="comprehendTextarea3" class="fw-bold open-sans pb-2">
+                                        Analyzed Text
+                                    </label>
+                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea3" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                </div>
+
+                                <div class="fs-13 text-primary fw-bold mt-5">Results</div>
+                                <div class="row my-4">
+                                    <div class="col-6">
+                                        <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="nav pgn fw-bold float-end">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link nav-link-active">1</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">2</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">3</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <table class="table fs-13" id="object_recognition">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0">Entity</th>
+                                                <th class="text-end border-0">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="c-0">
+                                            <tr>
+                                                <td>explain how you</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>mistaken idea of denouncing</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>expounding the actual teachings</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>great explorer of the truth</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>explain how you</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>mistaken idea of denouncing</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>expounding the actual teachings</td>
+                                                <td class="text-end">99%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold mt-5">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+                                    <div class="row mb-3">
+                                        <div class="col-6" style="padding-right: 17.5px;">
+                                            <div class="HTMLContainer3 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                        <div class="col-6" style="padding-left: 17.5px;">
+                                            <div class="HTMLContainer4 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table pan third -->
+                            <div class="tab-pane" id="languages-tab-pane" role="tabpanel">
+                                <div>
+                                    <label for="comprehendTextarea4" class="fw-bold open-sans pb-2">
+                                        Analyzed Text
+                                    </label>
+                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea4" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                </div>
+
+                                <div class="fs-13 text-primary fw-bold mt-5">Results</div>
+
+                                <div class="mt-4">
+                                    <table class="table fs-13" id="object_recognition">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0">Language</th>
+                                                <th class="text-end border-0">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="c-0">
+                                            <tr>
+                                                <td class="border-0">English, en</td>
+                                                <td class="text-end border-0">99%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+                                    <div class="row mb-3">
+                                        <div class="col-6" style="padding-right: 17.5px;">
+                                            <div class="HTMLContainer5 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                        <div class="col-6" style="padding-left: 17.5px;">
+                                            <div class="HTMLContainer6 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table pan fourth -->
+                            <div class="tab-pane" id="pii-tab-pane" role="tabpanel">
+                                <div class="fs-13">Personally Identifiable information (PII) analysis mode</div>
+
+                                <div class="row mt-13p mb-36p">
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="analysis_mode" value="offsets" id="offsets" checked="">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="offsets">
+                                                    Offsets
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Identify the location of PII in your text documents.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div>
+                                                <input class="radio align-top" type="radio" name="analysis_mode" value="labels" id="labels">
+                                            </div>
+                                            <div>
+                                                <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="labels">
+                                                    Labels
+                                                </label>
+                                                <div class="form-info ps-2">
+                                                    Label text documents with PII.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Offsets section -->
+                                <div id="offsets_section">
+                                    <div>
+                                        <label for="comprehendTextarea5" class="fw-bold open-sans pb-2">
+                                            Analyzed Text
+                                        </label>
+                                        <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea5" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                    </div>
+
+                                    <div class="fs-13 text-primary fw-bold mt-5">Results</div>
+                                    <div class="row my-4">
+                                        <div class="col-6">
+                                            <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                        </div>
+                                        <div class="col-6">
+                                            <ul class="nav pgn fw-bold float-end">
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link nav-link-active">1</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">2</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">3</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <table class="table fs-13" id="object_recognition">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-0">Entity</th>
+                                                    <th class="border-0">Type</th>
+                                                    <th class="text-end border-0">Confidence</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="c-0">
+                                                <tr>
+                                                    <td>explain how you</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>mistaken idea of denouncing</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>expounding the actual teachings</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>great explorer of the truth</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>explain how you</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>mistaken idea of denouncing</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>expounding the actual teachings</td>
+                                                    <td class="line">Person</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Labes sections -->
+                                <div id="labels_section" style="display: none;">
+
+                                    <div class="fs-13 text-primary fw-bold mt-5">Results</div>
+                                    <div class="row my-4">
+                                        <div class="search col-6" style="display: inline-block;">
+                                            <i class="fa fa-search"></i>
+                                            <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                        </div>
+                                        <div class="col-6">
+                                            <ul class="nav pgn fw-bold float-end">
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link nav-link-active">1</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">2</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">3</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <table class="table fs-13" id="object_recognition">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-0">Type</th>
+                                                    <th class="text-end border-0">Confidence</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="c-0">
+                                                <tr>
+                                                    <td>explain how you</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>mistaken idea of denouncing</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>expounding the actual teachings</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>great explorer of the truth</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>explain how you</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>mistaken idea of denouncing</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>expounding the actual teachings</td>
+                                                    <td class="text-end">99%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold mt-5">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+                                    <div class="row mb-3">
+                                        <div class="col-6" style="padding-right: 17.5px;">
+                                            <div class="HTMLContainer7 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                        <div class="col-6" style="padding-left: 17.5px;">
+                                            <div class="HTMLContainer8 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table pan fifth -->
+                            <div class="tab-pane" id="sentiment-tab-pane" role="tabpanel">
+                                <div>
+                                    <label for="comprehendTextarea6" class="fw-bold open-sans pb-2">
+                                        Analyzed Text
+                                    </label>
+                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea6" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                </div>
+
+                                <div class="fs-13 text-primary fw-bold mt-5 mb-3">Results</div>
+
+                                <div>
+                                    <table class="table fs-13" id="object_recognition">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0">Language</th>
+                                                <th class="text-end border-0">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="c-0">
+                                            <tr>
+                                                <td>Netural</td>
+                                                <td class="text-end">0.98</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Positive</td>
+                                                <td class="text-end">0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Negative</td>
+                                                <td class="text-end">0.01</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mixed</td>
+                                                <td class="text-end">0.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold mt-5">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+                                    <div class="row mb-3">
+                                        <div class="col-6" style="padding-right: 17.5px;">
+                                            <div class="HTMLContainer9 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                        <div class="col-6" style="padding-left: 17.5px;">
+                                            <div class="HTMLContainer10 fs-11"></div>
+                                            <button class="button button-sm text-uppercase mt-18p float-end">copy text</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- table pan sixth -->
+                            <div class="tab-pane" id="syntax-tab-pane" role="tabpanel">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
 </div>
+<script>
+    // var HTMLContainer = document.querySelector(".HTMLContainer");
+    // var HTMLContainer2 = document.querySelector(".HTMLContainer2");
+
+    // setTimeout(() => {
+    //     var cmeditor = CodeMirror(HTMLContainer, {
+    //         lineNumbers: true,
+    //         lineWrapping: true,
+    //         mode: "jsonld",
+    //     });
+
+    //     var cmeditor2 = CodeMirror(HTMLContainer2, {
+    //         lineNumbers: true,
+    //         lineWrapping: true,
+    //         mode: "jsonld",
+    //     });
+    // }, 100);
+
+    // var firstTimeSecond = true;
+    // $('.nav-item:nth-child(2)').on('click', function () {
+    //     if (firstTimeSecond) {
+    //         firstTimeSecond = false;
+    //         var HTMLContainer3 = document.querySelector(".HTMLContainer3");
+    //         var HTMLContainer4 = document.querySelector(".HTMLContainer4");
+    //         var cmeditor3 = CodeMirror(HTMLContainer3, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+
+    //         var cmeditor4 = CodeMirror(HTMLContainer4, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+    //     }
+    // });
+
+    // var firstTimeThird = true;
+    // $('.nav-item:nth-child(3)').on('click', function () {
+    //     if (firstTimeThird) {
+    //         firstTimeThird = false;
+    //         var HTMLContainer5 = document.querySelector(".HTMLContainer5");
+    //         var HTMLContainer6 = document.querySelector(".HTMLContainer6");
+    //         var cmeditor3 = CodeMirror(HTMLContainer5, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+
+    //         var cmeditor4 = CodeMirror(HTMLContainer6, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+    //     }
+    // });
+
+    // var firstTimeFourth = true;
+    // $('.nav-item:nth-child(4)').on('click', function () {
+    //     if (firstTimeFourth) {
+    //         firstTimeFourth = false;
+    //         var HTMLContainer7 = document.querySelector(".HTMLContainer7");
+    //         var HTMLContainer8 = document.querySelector(".HTMLContainer8");
+    //         var cmeditor3 = CodeMirror(HTMLContainer7, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+
+    //         var cmeditor4 = CodeMirror(HTMLContainer8, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+    //     }
+    // });
+
+    // var firstTimeFifth = true;
+    // $('.nav-item:nth-child(5)').on('click', function () {
+    //     if (firstTimeFifth) {
+    //         firstTimeFifth = false;
+    //         var HTMLContainer9 = document.querySelector(".HTMLContainer9");
+    //         var HTMLContainer10 = document.querySelector(".HTMLContainer10");
+    //         var cmeditor3 = CodeMirror(HTMLContainer9, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+
+    //         var cmeditor4 = CodeMirror(HTMLContainer10, {
+    //             lineNumbers: true,
+    //             lineWrapping: true,
+    //             mode: "jsonld",
+    //         });
+    //     }
+    // });
+    tinymce.init({
+        selector: "#mytextarea",
+        height: 400,
+        plugins: [
+            "advlist autolink advcode lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table paste emoticons"
+        ],
+        toolbar:
+            "styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | code ",
+        menubar: "file edit view insert format tools table help",
+        setup: function (editor) {
+            editor.on("keyup", function (e) {
+                updateHTML(editor.getContent());
+            });
+            editor.on("change", function (e) {
+                updateHTML(editor.getContent());
+            });
+        }
+    });
+
+    function updateHTML(content) {
+        cmeditor.getDoc().setValue(content);
+    }
+
+    function updateEditor() {
+        if (!tinymce.activeEditor.hasFocus()) {
+            tinymce.activeEditor.setContent(cmeditor.getDoc().getValue());
+        }
+    }
+
+    var HTMLContainer = document.querySelector(".HTMLContainer");
+
+    var cmeditor = CodeMirror(HTMLContainer, {
+        lineNumbers: true,
+        mode: "htmlmixed"
+    });
+
+    cmeditor.on("change", (editor) => {
+        updateEditor();
+    });
+
+</script>
 <div class="modal-footer">
-    <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
     <button type="button" class="btn btnprimary">RESET DEMO</button>
 </div>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="js/configList.js"></script>
+<script src="js/index.js"></script> -->

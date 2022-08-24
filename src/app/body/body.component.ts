@@ -129,14 +129,32 @@ export class BodyComponent implements OnInit {
     }],
     color: "#000000"
   },];
-  viewdata = this.database;
+
+  viewdata = this.getItems();
   @Input() sort = 0;
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
+    ;
+    if (this.sort == 0)
+      this.setItems(this.database);
+    console.log(this.viewdata);
     console.log(this.sort);
     if (this.sort == 1) {
-      this.database.sort((a, b) => {
+      // debugger;
+      if (localStorage.getItem("inputEle")) {
+        this.searchinput = localStorage.getItem("inputEle")!;
+      }
+      if (this.getItems()) {
+        this.viewdata = this.getItems();
+      }
+      else {
+        this.viewdata = this.database;
+      }
+
+      this.viewdata.sort((a: any, b: any) => {
         const nameA = a.title.toUpperCase(); // ignore upper and lowercase
         const nameB = b.title.toUpperCase(); // ignore upper and lowercase
         if (nameA < nameB) {
@@ -151,7 +169,19 @@ export class BodyComponent implements OnInit {
       });
     }
     else if (this.sort == -1) {
-      this.database.sort((a, b) => {
+
+      if (localStorage.getItem("inputEle")?.length) {
+        this.searchinput = localStorage.getItem("inputEle")!;
+      }
+
+      if (this.getItems()) {
+        this.viewdata = this.getItems();
+      }
+      else {
+        this.viewdata = this.database;
+      }
+
+      this.viewdata.sort((a: any, b: any) => {
         const nameA = a.title.toUpperCase(); // ignore upper and lowercase
         const nameB = b.title.toUpperCase(); // ignore upper and lowercase
         if (nameA < nameB) {
@@ -164,26 +194,32 @@ export class BodyComponent implements OnInit {
         // names must be equal
         return 0;
       });
+      if (!this.getItems())
+        this.setItems(this.database);
     }
+
   }
 
   searchFilter() {
-    // var input, filter, ul, li, a, i, txtValue;
-    var input: any = document.getElementById("search");
-    if (this.searchinput.length > 1) {
-      // debugger;
-      let filterArray = this.database
-        .map((element) => ({
-          ...element,
-          value: element.value.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()))
-        }))
-        .filter(data => data.value.length > 0);
+    // debugger;
+    let filterArray = this.database
+      .map((element) => ({
+        ...element,
+        value: element.value.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()))
+      }))
+      .filter(data => data.value.length > 0);
+    this.setItems(filterArray);
+    //this.viewdata = filterArray;
+    this.viewdata = this.getItems();
+    localStorage.setItem("inputEle", this.searchinput)
 
-      this.viewdata = filterArray;
+  }
 
-    }
-    else {
-      this.viewdata = this.database
-    }
+
+  getItems(): any {
+    return JSON.parse(localStorage.getItem("APIData")!)
+  }
+  setItems(data: any) {
+    localStorage.setItem("APIData", JSON.stringify(data))
   }
 }

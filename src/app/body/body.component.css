@@ -58,6 +58,10 @@ hr {
     border: none;
     border-bottom: #AAAAAA solid 2px;
     width: 350px;
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: #888888;
 }
 
 ::placeholder {
@@ -142,4 +146,10 @@ ul {
 
 .li-cont {
     cursor: pointer;
+}
+
+.noRecord {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Open Sans';
 }

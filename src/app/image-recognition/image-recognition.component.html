@@ -28,7 +28,7 @@
                     <div class="col">
                         <div class="search col" style="display: inline-block;">
                             <i class="fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search for a Label...">
+                            <input type="text" class="form-control" placeholder="Search for a Label..." [(ngModel)]="searchinput" (keyup)="searchFilter()">
                         </div>
                     </div>
                     <div class="search-lable">
@@ -37,37 +37,10 @@
                     <div class="fs-13 text-primary fw-bold mt-4 mb-20p">Results</div>
                     <table class="table fs-13" id="image_recognition">
                         <tbody class="c-0">
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Human</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Object</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
-                            </tr>
-                            <tr>
-                                <td>Person</td>
-                                <td class="text-end">99%</td>
+                            <div class="text-center m-2 p-2" *ngIf="results.length == 0">No Matching Records Found</div>
+                            <tr *ngFor="let result of results">
+                                <td>{{result.title}}</td>
+                                <td class="text-end">{{result.percent}}%</td>
                             </tr>
                         </tbody>
                     </table>

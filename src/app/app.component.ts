@@ -12,8 +12,12 @@ import { PopupTextToSpeechComponent } from './popup-text-to-speech/popup-text-to
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  constructor(){}
 
+  constructor() { }
+  sortvar = 0;
+  sort(sort: 1 | 0 | -1) {
+    //console.log(sort);
+    this.sortvar = sort;
+  }
 
 }

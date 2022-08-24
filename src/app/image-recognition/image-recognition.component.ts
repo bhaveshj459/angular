@@ -6,6 +6,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./image-recognition.component.css']
 })
 export class ImageRecognitionComponent implements OnInit {
+  searchinput = '';
+  database = [{
+    title: "Person",
+    percent: 90
+  }, {
+    title: "Human",
+    percent: 90
+  }, {
+    title: "Object",
+    percent: 90
+  }, {
+    title: "Person",
+    percent: 90
+  }, {
+    title: "Person",
+    percent: 90
+  }, {
+    title: "Person",
+    percent: 90
+  }, {
+    title: "Person",
+    percent: 90
+  }, {
+    title: "Person",
+    percent: 90
+  },];
+
+  results = this.database;
+
   url: any = "assets/image/sample.png";
   constructor() { }
 
@@ -18,6 +47,20 @@ export class ImageRecognitionComponent implements OnInit {
 
     reader.onload = (_event) => {
       this.url = reader.result;
+    }
+  }
+
+  searchFilter() {
+    // var input, filter, ul, li, a, i, txtValue;
+    var input: any = document.getElementById("search");
+    if (this.searchinput.length > 1) {
+      // debugger;
+      let filterArray = this.database.filter(data => data.title.toLowerCase().includes(this.searchinput.toLowerCase()));
+      this.results = filterArray;
+
+    }
+    else {
+      this.results = this.database
     }
   }
 }

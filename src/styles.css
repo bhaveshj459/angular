@@ -1,4 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+/* @import '~codemirror/lib/codemirror';
+@import '~codemirror/theme/material'; */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.fs-11 {
+    font-size: 11px;
+}
+
+.fs-13 {
+    font-size: 13px;
+}
+
+
+
+.c-0 {
+    color: #000000;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.modal-body label {
+    font-size: 13px;
+}
+
+input:checked {
+    height: 18px;
+    width: 18px;
+}
+
+.radio {
+    height: 18px;
+    width: 18px;
+}
+
+.open-sans {
+    font-family: 'Open Sans', sans-serif;
+    color: #000000;
+}

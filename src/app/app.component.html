@@ -6,13 +6,16 @@
   </div>
   <hr>
   <app-popup-text-to-speech></app-popup-text-to-speech>
-  <app-search-bar></app-search-bar>
+  <app-search-bar (toggleEvent)="sort($event)"></app-search-bar>
 
   <div class="row" style="margin-top:16px">
     <app-sidebar class="col-1"></app-sidebar>
 
     <div class="col-11">
-      <app-body></app-body>
+      <app-body [sort]="sortvar" *ngIf="sortvar== -1"></app-body>
+      <app-body [sort]="sortvar" *ngIf="sortvar == 1"></app-body>
+      <app-body [sort]="sortvar" *ngIf="sortvar == 0"></app-body>
+      <!-- <app-body [sort]="sortvar"></app-body> -->
       <div class="footer"></div>
     </div>
 
