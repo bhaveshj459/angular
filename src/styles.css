@@ -77,3 +77,16 @@ input:checked {
 .my-disable {
     pointer-events: none;
 }
+
+.accordion {
+    --bs-accordion-btn-icon: url("data: image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:svgjs='http://svgjs.com/svgjs' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' %3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 320 512' %3E%3Cpath fill='%23888' d='M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z' class='color000 svgShape' /%3E%3C/svg%3E%3C/svg%3E") !important;
+    --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:svgjs='http://svgjs.com/svgjs' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20' %3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 320 512'%3E%3Cpath fill='%23888' d='M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z' class='color000 svgShape'/%3E%3C/svg%3E%3C/svg%3E") !important;
+}
+
+.image-section {
+    margin: 0px !important;
+}
+
+.buttondiv {
+    padding: 12px;
+}

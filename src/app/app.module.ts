@@ -17,6 +17,7 @@ import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component
 import { ComprehendComponent } from './comprehend/comprehend.component';
 import { ImageRecognitionComponent } from './image-recognition/image-recognition.component';
 import { EditorModule } from './editor/editor.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { EditorModule } from './editor/editor.module';
     FormsModule,
     EditorModule
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
