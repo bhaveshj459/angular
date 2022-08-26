@@ -22,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'image-recognition', component: ImageRecognitionComponent
-  }
+  },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({

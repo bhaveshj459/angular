@@ -43,7 +43,7 @@ a.active {
 
 .modal-body {
     padding-top: 18px;
-    max-height: 540px;
+    max-height: 519px;
     overflow: auto;
 }
 
@@ -143,4 +143,8 @@ textarea {
 
 .btn primary {
     color: #FFFFFF;
+}
+
+.row {
+    margin: 0px;
 }

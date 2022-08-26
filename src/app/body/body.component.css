@@ -121,7 +121,7 @@ ul {
 
 .cardtitle {
     font-size: 16px;
-    font-weight: 900;
+    font-weight: bold;
     font-family: 'Open Sans';
     text-align: left;
     text-transform: uppercase;

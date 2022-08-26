@@ -16,6 +16,7 @@ import { TextractComponent } from './textract/textract.component';
 import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component';
 import { ComprehendComponent } from './comprehend/comprehend.component';
 import { ImageRecognitionComponent } from './image-recognition/image-recognition.component';
+import { EditorModule } from './editor/editor.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ImageRecognitionComponent } from './image-recognition/image-recognition
     BrowserModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    EditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

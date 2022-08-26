@@ -1,6 +1,5 @@
 .modal-header {
     position: relative;
-    height: 40px;
 }
 
 .modal-title {
@@ -12,7 +11,7 @@
 
 .modal-body {
     height: auto;
-    max-height: 540px;
+    max-height: 519px;
     overflow: auto;
 }
 

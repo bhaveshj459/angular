@@ -137,7 +137,10 @@ export class BodyComponent implements OnInit {
   }
 
   ngOnInit() {
-    ;
+    if (this.getItems() == null) {
+      this.setItems(this.database);
+      this.viewdata = this.getItems();
+    }
     if (this.sort == 0)
       this.setItems(this.database);
     console.log(this.viewdata);

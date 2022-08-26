@@ -1,0 +1,11 @@
+.app-ace-editor {
+    width: 100%;
+    min-height: 400px;
+    border: 1px solid white;
+    color: #000000 !important;
+    background-color: white !important;
+}
+
+.ace_layer {
+    background-color: #F0F0F0 !important;
+}

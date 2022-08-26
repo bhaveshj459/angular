@@ -48,3 +48,32 @@ input:checked {
     font-family: 'Open Sans', sans-serif;
     color: #000000;
 }
+
+.ace_gutter-layer {
+    background-color: #F0F0F0 !important;
+}
+
+.ace_folding-enabled > .ace_gutter-cell {
+    background: transparent !important;
+}
+
+.ace_marker-layer .ace_active-line {
+    background: transparent !important;
+}
+
+.ace_text-input {
+    caret-color: black !important;
+    color: aqua;
+}
+
+.modal-body::-webkit-scrollbar {
+    display: none;
+}
+
+.col-9 {
+    padding: 0 !important;
+}
+
+.my-disable {
+    pointer-events: none;
+}
