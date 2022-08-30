@@ -14,11 +14,9 @@ export class SearchBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleFuntion() {
-    if (this.sort == 1)
-      this.sort = -1;
-    else
-      this.sort = 1
+  toggleFuntion(int: number) {
+
+    this.sort = int;
     this.toggleEvent.emit(this.sort);
   }
 

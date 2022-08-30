@@ -3,9 +3,17 @@
     <div style="display: inline-block; cursor: pointer;" (click)="tosearchbar()"><a>
         <img src="assets/image/search_black_24dp.jpg" alt="img not found"></a>
     </div>
-
-    <div style="display: inline-block;" (click)="toggleFuntion()">
+    <div class="dropdown d-inlineblock">
       <img src="assets/image/sort_black_24dp.jpg" alt="img not found">
+      <div class="dropdown-content">
+        <i class="fas fa-sort-alpha-down" (click)="toggleFuntion(1)"></i>
+        <br>
+        <i class="fas fa-arrow-up-z-a" (click)="toggleFuntion(-1)"></i>
+
+      </div>
+    </div>
+    <div style="display: inline-block;">
+
 
     </div>
     <div style="display: inline-block;">

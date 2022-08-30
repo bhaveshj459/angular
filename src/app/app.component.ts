@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 
 
 // @Component({
@@ -11,7 +11,7 @@ import { Component, Injectable } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor() { }
   sortvar = 0;
@@ -20,4 +20,10 @@ export class AppComponent {
     this.sortvar = sort;
   }
 
+  ngOnInit(): void {
+    if (window.location.hash.length > 3) {
+      window.location.href = window.location.pathname + "/";
+    }
+
+  }
 }
