@@ -1,6 +1,7 @@
 <div class="body">
 
 
+
   <div class="header-sec container">
     <p id="title">
       Explore
@@ -32,7 +33,7 @@
     to get started.
   </div>
 
-
+  <div class="loaderM" [ngClass]="loader? 'd-block':'d-none'"></div>
   <div>
     <div class="rows">
       <div class=" noRecord" *ngIf="viewdata.length == 0">No Matching API Records Found</div>
