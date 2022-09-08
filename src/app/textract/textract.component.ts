@@ -138,12 +138,12 @@ export class TextractComponent implements OnInit {
   }
 
   querySearchFilter() {
-    if (this.queryInput.length >= 1) {
+    if (this.queryInput.length > 1) {
       let filterArray = this.queryDatabase.filter(data => data.ques.toLowerCase().includes(this.queryInput.toLowerCase()) || data.ans.toLowerCase().includes(this.queryInput.toLowerCase()) || data.alias.toLowerCase().includes(this.queryInput.toLowerCase()));
       this.queryData = filterArray;
 
     }
-    else {
+    if (this.queryInput.length > 0) {
       this.queryData = this.queryDatabase
     }
 

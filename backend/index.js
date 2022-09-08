@@ -2,9 +2,10 @@ const express= require('express');
 //const cors = require('cors');
 const http= require('http');
 const { json } = require('stream/consumers');
+const port=require("./port.json");
+const fs=require('fs');
 
 const app=express();
-const port=3000;
 
 app.use(express.json());
 //app.use(cors())
@@ -16,6 +17,10 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+
+
+
+
 let database = new Array();
 
  database=[{
@@ -134,11 +139,31 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/cards",(req,res)=>{
-    res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Origin', '*');
+  let resultData;
+ fs.readFile('backend/APIcard.json','utf-8',(err,data)=>{
+      if(!err){
+        resultData= JSON.stringify(data)
+      }
+    });
     res.send(database);
     res.end();
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(getData())
+  console.log(`Example app listening on port ${port.port}`)
 })
+
+function getData(){
+  fs.readFile('backend/APIcard.json','utf-8',(err,data)=>{
+      if(err){
+       return "here"
+      }
+      else{
+        console.log(JSON.parse(data));
+        let resultData=JSON.stringify(data);
+        return resultData;
+      }
+    })
+}
