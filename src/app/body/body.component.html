@@ -24,7 +24,7 @@
 
   <div class="search-seaction">
     <section> Search for an API </section>
-    <input type="text" id="search" [(ngModel)]="searchinput" placeholder="Enter an API" (keyup)="searchFilter()">
+    <input type="text" id="search" [(ngModel)]="searchinput" placeholder="Enter an API">
 
   </div>
 
@@ -37,7 +37,7 @@
   <div>
     <div class="rows">
       <div class=" noRecord" *ngIf="viewdata.length == 0">No Matching API Records Found</div>
-      <div class="cards" *ngFor="let data of viewdata" [style.border-color]="data.color">
+      <div class="cards" *ngFor="let data of viewdata |filter:searchinput" [style.border-color]="data.color">
         <ul type="none">
           <div class="cardtitle">{{data.title}}</div>
 

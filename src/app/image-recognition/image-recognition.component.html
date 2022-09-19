@@ -11,15 +11,25 @@
                 <div class="col-sm-6">
                     <div class="section-title">Document Name</div>
                     <div class="image-section">
-                        <img [src]="url" alt="">
+                        <img [src]="url" alt="" *ngIf="url" height="380px" width="350px">
+                        <div *ngIf="imageresult">
+                            <div *ngFor="let arq of results">
+
+                                <div *ngFor="let q of arq.Instances">
+                                    <div placement="top" [ngStyle]="{'position':'absolute','top':((q.BoundingBox.Top*height)+115)+'px','left':((q.BoundingBox.Left*width)+20)+'px','height':((q.BoundingBox.Height*height))+'px','width':((q.BoundingBox.Width*width))+'px','pointer-events': 'inherit','border': '2px solid','border-color':((arq.Confidence > 90?'red':'orange')), 'border-radius': '3%'}">
+                                        <span class="tooltiptext">
+                                            {{arq.Name}}
+                                        </span>
+                                    </div>
+                                    <!-- </a>   -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row buttondiv">
-                        <select name="image-file" id="dropdown" class="col-6 modal-select modal-select-sm c-0">
-                            <option value="null">Choose Sample Document</option>
-                            <option value="English, UK">English, UK</option>
-                            <option value="Hindi, IND">Hindi, IND</option>
-                        </select>
-                        <input type="file" id="imagfile" (change)="selectFile($event)" class="custom-file-input" placeholder="Upload Document" hidden><label for="imagfile" class="filelabel col-6">Upload Document</label>
+                        <input type="file" id="imagfile" (change)="selectFile($event)" class="form-control custom-file-input" placeholder="Upload Document" hidden [(ngModel)]="change" name="change" accept=".jpg,.png,.jpeg">
+
+                        <label for="imagfile" class="filelabel col-6">Upload Document</label>
                     </div>
                 </div>
 
@@ -38,9 +48,10 @@
                     <table class="table fs-13" id="image_recognition">
                         <tbody class="c-0">
                             <div class="text-center m-2 p-2" *ngIf="results.length == 0">No Matching Records Found</div>
+                            <div class="loaderM " [ngClass]="loader? 'd-block':'d-none'" style="margin-left: 100px !important"></div>
                             <tr *ngFor="let result of results">
-                                <td>{{result.title}}</td>
-                                <td class="text-end">{{result.percent}}%</td>
+                                <td>{{result.Name}}</td>
+                                <td class="text-end">{{result.Confidence}}%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,6 +63,12 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
-    <button type="button" class="btn btnprimary">RESET DEMO</button>
+    <button type="button" class="btn btnsecondary text-uppercase text-decoration-none" *ngIf="dowload" style="font-weight: 650;min-width: 25%;width: auto;" (click)="exportexcel()">
+        <svg class="float-start me-1" id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="25" height="22" viewBox="0 0 24 24">
+            <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none"></path>
+            <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff"></path>
+        </svg>
+        <span>DOWNLOAD</span>
+    </button>
+    <button type="button" class="btn btnprimary" routerLink="/image-recognition" routerLinkActive="active"> RESET DEMO</button>
 </div>

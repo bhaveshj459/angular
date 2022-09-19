@@ -2,12 +2,7 @@
     position: relative;
 }
 
-.modal-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #0091FF;
-    font-family: 'Open Sans';
-}
+
 
 .modal-body {
     height: auto;
@@ -48,20 +43,15 @@
     margin-bottom: 5px
 }
 
-.image-section {
-    height: 382px;
-    border: 1px solid #DDDDDD;
-    border-radius: 8px;
-    margin: 10px;
-    width: 100%;
-}
+
 
 .image-section img {
-    width: 286px;
-    height: 382px;
+    width: 359px;
+    height: 380px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    object-fit: contain;
 
 }
 
@@ -125,4 +115,21 @@ select {
     color: #000000;
     text-align: center;
     margin-top: 12px;
+}
+
+
+.tooltiptext {
+    font-size: 10px;
+    visibility: visible;
+    width: max-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px;
+    position: absolute;
+    display: table-row-group;
+    z-index: 3;
+    top: -16px;
+
 }

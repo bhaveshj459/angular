@@ -5,6 +5,7 @@ import 'ace-builds/src-noconflict/mode-yaml';
 import 'ace-builds/src-noconflict/mode-typescript';
 import 'ace-builds/src-noconflict/mode-scss';
 import { response } from 'express';
+import { VariableBinding } from '@angular/compiler';
 
 @Component({
   selector: 'app-comprehend',
@@ -12,6 +13,17 @@ import { response } from 'express';
   styleUrls: ['./comprehend.component.css']
 })
 export class ComprehendComponent implements OnInit {
+  users: any;
+  p: number = 1;
+  p1: any = {
+    "entitySearchInput": 1,
+    "entitySearchInputkeyphase": 1,
+    "entitySearchInputPii": 1,
+    "entitySearchInputPii1": 1,
+    "entitySearchInputSyntax": 1
+  };
+  total: number = 0;
+
   trim_value: any = document.querySelector(".ace_lin")?.innerHTML.trim();
   title = 'angular-code-editor';
 
@@ -31,12 +43,17 @@ export class ComprehendComponent implements OnInit {
 
   entitySearchInput = '';
   entitySearchInputPii = '';
+  entitySearchInputPii1 = '';
+  entitySearchInputkeyphase = '';
+  entitySearchInputSyntax = '';
   viewData: any;
   piiRadio: any = "offsets";
 
   loader = false;
 
   response: any;
+  paginationArray: number[] = [];
+  isPaginationWorking = false;
 
   input = document.getElementById("texteditor_1")?.addEventListener("keypress", function (event) {
     if (event.key == "Enter") {
@@ -51,17 +68,28 @@ export class ComprehendComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   clearText() {
     this.comprehendTextarea1 = '';
     this.comprehendTextarea1.toUpperCase()
     this.response = null;
+    this.entitySearchInput = '';
+    this.entitySearchInputPii = '';
+    this.entitySearchInputPii1 = '';
+    this.entitySearchInputkeyphase = '';
+    this.entitySearchInputSyntax = '';
   }
 
   reset() {
     this.response = null;
     this.comprehendTextarea1 = "Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000. ";
+    this.entitySearchInput = '';
+    this.entitySearchInputPii = '';
+    this.entitySearchInputPii1 = '';
+    this.entitySearchInputkeyphase = '';
+    this.entitySearchInputSyntax = '';
   }
   copyText(text: string) {
     navigator.clipboard.writeText(text);
@@ -69,7 +97,7 @@ export class ComprehendComponent implements OnInit {
 
   async analyze(text: string) {
 
-    console.log(this.piiRadio)
+    //console.log(this.piiRadio)
     if (this.comprehendTextarea1.length != 0) {
       this.loader = true;
       await fetch("https://l6evezpefe.execute-api.us-east-1.amazonaws.com/final/comprehend", {
@@ -82,15 +110,14 @@ export class ComprehendComponent implements OnInit {
       })
         .then(response => response.json())
         .then(respdata => {
-          console.log(respdata.entities);
+          //console.log(respdata.entities);
           this.response = respdata;
-
-
-          // this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
-          //   ...element,
-          //   // @ts-ignore
-          //   Score: Math.floor(element.Score * 100)
-          // }));
+          this.viewData = this.response;
+          this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
+            ...element,
+            // @ts-ignore
+            Score: Math.floor(element.Score * 100)
+          }));
           this.response.keyPhaseResults.KeyPhrases = this.response.keyPhaseResults.KeyPhrases.map((element: any) => ({
             ...element,
             // @ts-ignore
@@ -107,19 +134,12 @@ export class ComprehendComponent implements OnInit {
             // @ts-ignore
             Score: Math.floor(element.Score * 100)
           }));
-          // this.response.sentiment.SentimentScore = this.response.sentiment.SentimentScore.map((element: any) => ({
-          //   // @ts-ignore
-          //   Positive: element.Positive.toFixed(2),
-          //   // @ts-ignore
-          //   Negative: element.Negative.toFixed(2),
-          //   // @ts-ignore
-          //   Neutral: element.Neutral.toFixed(2),
-          //   // @ts-ignore
-          //   Mixed: element.Mixed.toFixed(2),
-          // }));
+          // this.response.sentiment.SentimentScore.Positive = (Number.parseFloat(this.response.sentiment.SentimentScore.Positive)).toFixed(2);
+          // this.response.sentiment.SentimentScore.Negative = this.response.sentiment.SentimentScore.Negative.toFixed(2);
+          // this.response.sentiment.SentimentScore.Neutral = this.response.sentiment.SentimentScore.Neutral.toFixed(2);
+          // this.response.sentiment.SentimentScore.Mixed = this.response.sentiment.SentimentScore.Mixed.toFixed(2);
 
-          console.log("rep" + this.response.entities)
-          this.viewData = this.response;
+          //console.log("rep" + this.response.entities)
           this.jsonInputData = `{
   "Text" : ` + text + `
 }`;
@@ -130,11 +150,13 @@ export class ComprehendComponent implements OnInit {
           this.jsonResponsePii = JSON.stringify(respdata.piiEntitiesResults, null, 2);
           this.jsonResponseLanguage = JSON.stringify(respdata.languageResults, null, 2);
 
+
           this.loader = false;
+
         })
 
         .catch(err => {
-          console.log(err);
+          //console.log(err);
           this.loader = false;
         })
     }
@@ -185,33 +207,34 @@ export class ComprehendComponent implements OnInit {
 
   }
 
+  search(entitySearchInput: string) { };
 
+  // search(entitySearchInput: string) {
+  //   if (entitySearchInput.length >= 1) {
+  //     // @ts-ignore
+  //     let filterArray = this.viewData.entities.Entities.filter(data => data.Text.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Type.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Score === parseInt(entitySearchInput));
+  //     this.viewData.entities.Entities = filterArray;
 
-  search(entitySearchInput: string) {
-    if (entitySearchInput.length >= 1) {
-      // @ts-ignore
-      let filterArray = this.viewData.entities.Entities.filter(data => data.Text.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Type.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Score === parseInt(entitySearchInput));
-      this.viewData.entities.Entities = filterArray;
+  //   }
+  //   else {
+  //     this.viewData.entities.Entities = this.response.entities.Entities;
+  //   }
 
-    }
-    else {
-      this.viewData.entities.Entities = this.response.entities.Entities;
-    }
-
-    console.log("this is herer " + this.response.entities.Entities.length)
-  }
+  //   //console.log("this is herer " + this.response.entities.Entities.length)
+  // }
   searchPii(entitySearchInput: string) {
     if (entitySearchInput.length >= 1) {
+      //debugger;
       // @ts-ignore
-      let filterArray = this.viewData.piiEntitiesResults.Entities.filter(data => data.Type.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Score === parseInt(entitySearchInput));
+      let filterArray = this.viewData.piiEntitiesResults.Entities.filter(data => data.Type.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Score == parseInt(entitySearchInput));
       this.viewData.piiEntitiesResults.Entities = filterArray;
 
     }
     else {
-      this.viewData.piiEntitiesResults.Entities = this.response.piiEntitiesResults.Entities;
+      this.viewData = this.response;
     }
 
-    console.log("this is herer " + this.response.piiEntitiesResults.Entities.length)
+    //console.log("this is herer " + this.response.piiEntitiesResults.Entities.length)
   }
 
   getLanguage(code: string) {
@@ -233,6 +256,12 @@ export class ComprehendComponent implements OnInit {
       case 'PROPN':
         return 'Proper noun'
       case 'PUNCT':
+        return 'Punctuation'
+      case 'ADP':
+        return 'Adposition'
+      case 'AUX':
+        return 'Auxiliary verb'
+      case 'PRON':
         return 'Pronoun'
       case 'VERB':
         return 'Verb'
@@ -250,4 +279,50 @@ export class ComprehendComponent implements OnInit {
     }
 
   }
+
+  // len: any;
+  // getUsers(data: any) {
+  //   this.users = data;
+  //   this.len = data.length;
+  //   this.total = this.len;
+  // }
+  // getUsers1(data: any) {
+  //   this.users = data;
+  //   this.len = data.length;
+  //   this.total = this.len;
+  // }
+
+  // pageChangeEvent(event: number, data: any, val: string) {
+  //   this.p = event;
+  //   this.users = data;
+  //   this.len = data.length;
+  //   this.total = this.len;
+  // }
+  // p2: number = 1;
+  // users1: any;
+  // total2: number = 0;
+  // pageChangeEvent1(event: number) {
+  //   this.p2 = event;
+  //   this.users1 = this.viewData.piiEntitiesResults.Entities;
+  //   this.len = this.users1.length;
+  //   this.total2 = this.len;
+  // }
+
+  // pagination(data: any, view: any[], postion: number) {
+  //   //console.log(this.viewData.view)
+  //   let noOfPage = data.length / 6;
+  //   this.paginationArray = [];
+  //   view = [];
+  //   for (let index = 0; index < noOfPage; index++) {
+
+  //     this.paginationArray.push(index + 1)
+
+  //     for (let index = ((postion - 1) * 6); index < ((postion * 6) - 1); index++) {
+  //       // debugger
+  //       view.push(data[index]);
+  //     }
+  //   }
+  //   //this.viewData.entities.Entities = view;
+  // }
+
 }

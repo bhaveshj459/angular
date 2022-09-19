@@ -151,8 +151,8 @@ app.get("/cards",(req,res)=>{
 })
 
 app.listen(port, () => {
-  console.log(getData())
-  console.log(`Example app listening on port ${port.port}`)
+  //console.log(getData())
+  //console.log(`Example app listening on port ${port.port}`)
 })
 
 function getData(){
@@ -161,7 +161,7 @@ function getData(){
        return "here"
       }
       else{
-        console.log(JSON.parse(data));
+        //console.log(JSON.parse(data));
         let resultData=JSON.stringify(data);
         return resultData;
       }

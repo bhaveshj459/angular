@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (window.location.hash.length > 3) {
-      window.location.href = window.location.pathname + "/";
+      //window.location.href = window.location.pathname + "/";
     }
 
   }

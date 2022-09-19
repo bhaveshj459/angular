@@ -9,13 +9,12 @@
 
 .modal-content {
     border-radius: 24px;
-    width: 100%;
-    height: 100%;
+
 }
 
 .button {
     font-size: 13px;
-    font-weight: 900;
+    font-weight: 700;
     font-family: 'Open Sans';
     color: #888888;
     text-decoration: none;
@@ -30,7 +29,6 @@ a.active {
 
 .nav {
     border-right: 2px solid #EEEEEE;
-    height: 638px;
 
 }
 
@@ -47,9 +45,6 @@ a.active {
     overflow: auto;
 }
 
-.modal-footer {
-    right: 0%;
-}
 
 .wrapper {
     margin-left: 65%
@@ -123,17 +118,7 @@ textarea {
     margin-left: 100px
 }
 
-.clrbut {
-    background: transparent;
-    color: #0091FF;
-    text-transform: uppercase;
-    text-align: center;
-    border-radius: 10px;
-    border-color: #0091FF;
-    padding: 3px;
-    right: 0px;
-    float: right;
-}
+
 
 .btnsecondary {
     background: transparent;

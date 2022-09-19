@@ -9,14 +9,14 @@ import { faLariSign } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./text-to-speech.component.css']
 })
 export class TextToSpeechComponent implements OnInit {
-
+  smallConverter = false;
   text: string = '';
   remaingText: number = 58 - this.text.length;
   response: boolean = false;
   downloadurl: any;
   loading: boolean = false;
   speaker: string = "Amy";
-
+  processedText: string = '';
   playState: boolean = false;
   constructor() { }
 
@@ -25,24 +25,26 @@ export class TextToSpeechComponent implements OnInit {
   clearText() {
     this.text = '';
     this.response = false;
+    this.processedText = '';
   }
 
   convertText() {
     if (this.text.length > 1) {
-
-      console.log(this.speaker);
+      this.processedText = this.text
+      //console.log(this.speaker);
       let fetchUrl = "https://it2c947od4.execute-api.us-east-1.amazonaws.com/prod/steve?user_id=mreader&speaker=" + this.speaker + "&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10&str=" + this.text;
       this.loading = true;
 
-      console.log(this.loading)
+      //console.log(this.loading)
       fetch(fetchUrl)
         .then((response) => response.json())
         .then((data) => {
           this.response = true;
-          console.log(data.url);
+          //console.log(data.url);
           this.downloadurl = data.url;
           this.loading = false;
-          console.log(this.loading)
+          this.smallConverter = true;
+          //console.log(this.loading)
         });
     }
   }
@@ -68,6 +70,17 @@ export class TextToSpeechComponent implements OnInit {
     this.playState = false;
   }
   changeevent($event: any) {
-    console.log("")
+    this.response = false;
+  }
+
+  validate() {
+    if (this.processedText != this.text) {
+      this.response = false;
+    }
+    else if (this.processedText.length != 0) {
+      this.response = true;
+    }
+
+    console.log(this.response);
   }
 }

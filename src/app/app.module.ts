@@ -18,6 +18,8 @@ import { ComprehendComponent } from './comprehend/comprehend.component';
 import { ImageRecognitionComponent } from './image-recognition/image-recognition.component';
 import { EditorModule } from './editor/editor.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserAnimationsModule,
     FontAwesomeModule,
     FormsModule,
-    EditorModule
+    EditorModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

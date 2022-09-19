@@ -22,11 +22,12 @@
                     <div class="d-inline-block">
                         <button type="button" class="text-uppercase button button-sm me-2" (click)="clearText()">Clear
                             text</button>
-                        <button type="button" class="text-uppercase button button-sm button-sm-primary px-22p">ANALYZE</button>
+                        <button type="button" class="text-uppercase button button-sm button-sm-primary px-22p" (click)="analyze(comprehendTextarea1)">ANALYZE</button>
                     </div>
                 </div>
 
-                <div>
+                <div class="loaderM" [ngClass]="loader? 'd-block':'d-none'"></div>
+                <div *ngIf="response">
                     <div class="fs-13 text-primary fw-bold mb-2">Insights</div>
                     <div class="result-tab">
                         <ul class="nav nav-fill fs-13 fw-bold border-bottom mb-4" role="tablist">
@@ -37,7 +38,7 @@
                                 <a class="nav-link" data-bs-toggle="tab" data-bs-target="#key-phrases-tab-pane" role="tab" area-controls="key-phrases-tab-pane" aria-selected="false">Key phrases</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#languages-tab-pane" role="tab" aria-controls="languages-tab-pane" aria-selected="false">languages</a>
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#languages-tab-pane" role="tab" aria-controls="languages-tab-pane" aria-selected="false">Languages</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" data-bs-target="#pii-tab-pane" role="tab" aria-controls="pii-tab-pane" aria-selected="false">PII</a>
@@ -53,38 +54,30 @@
                         <!-- Tab content -->
                         <div class="tab-content" id="comprehend-tab">
 
-                            <!-- table pan first -->
+                            <!-- Entities -->
                             <div class="tab-pane show active" id="entities-text-tab-pane" role="tabpanel">
                                 <div>
                                     <label for="comprehendTextarea2" class="fw-bold open-sans pb-2">
                                         Analyzed Text
                                     </label>
-                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" rows="6" placeholder="English, US" maxlength="685" disabled="">{{comprehendTextarea1}}</textarea>
+                                    <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                        <span *ngFor="let str of response.syntaxResults.SyntaxTokens" style="line-height: 24px;" [ngClass]="{underline: IsEntity(str.Text,response.entities.Entities)}" [style.border-bottom-color]="setColor(IsEntity(str.Text,response.entities.Entities))" class="ml-4">{{str.Text}} </span>
+                                    </div>
                                 </div>
 
                                 <div class="fs-13 text-primary fw-bold mt-5">Results</div>
                                 <div class="row my-4">
                                     <div class="col-6">
-                                        <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                        <div class="search forms mb-4">
+                                            <i class=" fa fa-search"></i>
+                                            <input type="text" name="input" class="form-control" placeholder="Search..." [(ngModel)]="entitySearchInput">
+                                        </div>
                                     </div>
                                     <div class="col-6">
                                         <ul class="nav pgn fw-bold float-end">
-                                            <li class="nav-item">
-                                                <a routerLink="/comprehend" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a routerLink="/comprehend" class="nav-link nav-link-active">1</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a routerLink="/comprehend" class="nav-link">2</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">3</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
-                                            </li>
+                                            <pagination-controls style="font-size: 13px" id="entities" (pageChange)="p1.entitySearchInput = $event" previousLabel="" nextLabel="" [maxSize]="5"></pagination-controls>
                                         </ul>
+
                                     </div>
                                 </div>
 
@@ -98,12 +91,13 @@
                                             </tr>
                                         </thead>
                                         <tbody class="c-0">
-                                            <tr>
-                                                <td>explain how you</td>
-                                                <td class="line"><span class="bg-primary"></span> Person</td>
-                                                <td class="text-end">99%</td>
+
+                                            <tr *ngFor="let data of viewData.entities.Entities|paginate: {id:'entities', itemsPerPage: 5, currentPage: p1.entitySearchInput  }|filter:entitySearchInput">
+                                                <td>{{data.Text}} </td>
+                                                <td class="line"><span [style.background]="setColor(data.Type)"></span> {{data.Type}}</td>
+                                                <td class="text-end">{{ data.Score}}%</td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>mistaken idea of denouncing</td>
                                                 <td class="line"><span class="bg-warning"></span> Person</td>
                                                 <td class="text-end">99%</td>
@@ -132,7 +126,7 @@
                                                 <td>expounding the actual teachings</td>
                                                 <td class="line"><span class="bg-primary"></span> Person</td>
                                                 <td class="text-end">99%</td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -142,39 +136,46 @@
                                     <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
 
                                 </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponseEntities" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseEntities)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- table pan second -->
+                            <!-- Key Phase -->
                             <div class="tab-pane" id="key-phrases-tab-pane" role="tabpanel">
                                 <div>
                                     <label for="comprehendTextarea3" class="fw-bold open-sans pb-2">
                                         Analyzed Text
                                     </label>
-                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea3" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                    <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                        <span *ngFor="let str of response.syntaxResults.SyntaxTokens" style="line-height: 24px;" [ngClass]="{underline: IsEntity(str.Text,response.keyPhaseResults.KeyPhrases)}" [style.border-bottom-color]="setColor('keyphase')" class="ml-4">{{str.Text}} </span>
+                                    </div>
                                 </div>
 
                                 <div class="fs-13 text-primary fw-bold mt-5">Results</div>
                                 <div class="row my-4">
                                     <div class="col-6">
-                                        <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                        <div class="search forms mb-4">
+                                            <i class=" fa fa-search"></i>
+                                            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="entitySearchInputkeyphase" name="entitySearchInputkeyphase">
+                                        </div>
                                     </div>
                                     <div class="col-6">
                                         <ul class="nav pgn fw-bold float-end">
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link nav-link-active">1</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">2</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">3</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
-                                            </li>
+                                            <pagination-controls style="font-size: 13px" id="keyphase" (pageChange)="p1.entitySearchInputkeyphase = $event" previousLabel="" nextLabel="" [maxSize]="5"></pagination-controls>
                                         </ul>
                                     </div>
                                 </div>
@@ -188,34 +189,12 @@
                                             </tr>
                                         </thead>
                                         <tbody class="c-0">
-                                            <tr>
-                                                <td>explain how you</td>
-                                                <td class="text-end">99%</td>
+                                            <tr *ngFor="let data of viewData.keyPhaseResults.KeyPhrases |paginate: {id:'keyphase', itemsPerPage: 5, currentPage: p1.entitySearchInputkeyphase  }|filter:entitySearchInputkeyphase">
+
+                                                <td>{{data.Text}}</td>
+                                                <td class="text-end">{{data.Score}}%</td>
                                             </tr>
-                                            <tr>
-                                                <td>mistaken idea of denouncing</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>expounding the actual teachings</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>great explorer of the truth</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>explain how you</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>mistaken idea of denouncing</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>expounding the actual teachings</td>
-                                                <td class="text-end">99%</td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -225,15 +204,33 @@
                                     <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
 
                                 </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponseKeyPhase" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseKeyPhase)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- table pan third -->
+                            <!-- Language -->
                             <div class="tab-pane" id="languages-tab-pane" role="tabpanel">
                                 <div>
                                     <label for="comprehendTextarea4" class="fw-bold open-sans pb-2">
                                         Analyzed Text
                                     </label>
-                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea4" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                    <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                        <span *ngFor="let str of response.syntaxResults.SyntaxTokens" [ngClass]="{underline: !response.entities.Entities }" style="line-height: 24px;">{{str.Text}} </span>
+                                    </div>
                                 </div>
 
                                 <div class="fs-13 text-primary fw-bold mt-5">Results</div>
@@ -247,9 +244,9 @@
                                             </tr>
                                         </thead>
                                         <tbody class="c-0">
-                                            <tr>
-                                                <td class="border-0">English, en</td>
-                                                <td class="text-end border-0">99%</td>
+                                            <tr *ngFor="let str of response.languageResults.Languages">
+                                                <td class="border-0">{{str.LanguageCode}}</td>
+                                                <td class="text-end border-0">{{str.Score}}%</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -260,9 +257,25 @@
                                     <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
 
                                 </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponseLanguage" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseLanguage)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- table pan fourth -->
+                            <!-- PII -->
                             <div class="tab-pane" id="pii-tab-pane" role="tabpanel">
                                 <div class="fs-13">Personally Identifiable information (PII) analysis mode</div>
 
@@ -270,7 +283,8 @@
                                     <div class="col-6">
                                         <div class="d-flex">
                                             <div>
-                                                <input class="radio align-top" type="radio" name="analysis_mode" value="offsets" id="offsets" checked="">
+                                                <!-- <input type="radio" checked> -->
+                                                <input class="radio align-top" type="radio" name="analysis_mode" value="offsets" [(ngModel)]="piiRadio" checked>
                                             </div>
                                             <div>
                                                 <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="offsets">
@@ -285,7 +299,7 @@
                                     <div class="col-6">
                                         <div class="d-flex">
                                             <div>
-                                                <input class="radio align-top" type="radio" name="analysis_mode" value="labels" id="labels">
+                                                <input class="radio align-top" type="radio" name="analysis_mode" value="labels" [(ngModel)]="piiRadio">
                                             </div>
                                             <div>
                                                 <label class="form-check-label open-sans align-top c-0 ps-2 fw-semibold" for="labels">
@@ -300,36 +314,27 @@
                                 </div>
 
                                 <!-- Offsets section -->
-                                <div id="offsets_section">
+                                <div id="offsets_section" [ngClass]="{'d-none': piiRadio != 'offsets'}">
                                     <div>
                                         <label for="comprehendTextarea5" class="fw-bold open-sans pb-2">
                                             Analyzed Text
                                         </label>
-                                        <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea5" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                        <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                            <span *ngFor="let str of response.syntaxResults.SyntaxTokens" [ngClass]="{underline: IsEntity(str.Text,response.entities.Entities)}" [style.border-bottom-color]="setColor(IsEntity(str.Text,response.entities.Entities))" class="ml-4" style="line-height: 24px;"> {{str.Text}} </span>
+                                        </div>
                                     </div>
 
                                     <div class="fs-13 text-primary fw-bold mt-5">Results</div>
                                     <div class="row my-4">
                                         <div class="col-6">
-                                            <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                            <div class="search forms mb-4">
+                                                <i class=" fa fa-search"></i>
+                                                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="entitySearchInputPii" name="entitySearchInputPii">
+                                            </div>
                                         </div>
                                         <div class="col-6">
                                             <ul class="nav pgn fw-bold float-end">
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link nav-link-active">1</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link">2</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link">3</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
-                                                </li>
+                                                <pagination-controls style="font-size: 13px" id="pii1" (pageChange)="p1.entitySearchInputPii = $event" previousLabel="" nextLabel="" [maxSize]="5"></pagination-controls>
                                             </ul>
                                         </div>
                                     </div>
@@ -344,72 +349,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="c-0">
-                                                <tr>
-                                                    <td>explain how you</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
+                                                <tr *ngFor="let str of viewData.entities.Entities| paginate: {id:'pii1', itemsPerPage: 5, currentPage: p1.entitySearchInputPii  } |filter:entitySearchInputPii">
+                                                    <td>{{str.Text}}</td>
+                                                    <td class="line">{{str.Type}}</td>
+                                                    <td class="text-end">{{str.Score}}%</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>mistaken idea of denouncing</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>expounding the actual teachings</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>great explorer of the truth</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>explain how you</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>mistaken idea of denouncing</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>expounding the actual teachings</td>
-                                                    <td class="line">Person</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
 
                                 <!-- Labes sections -->
-                                <div id="labels_section" style="display: none;">
+                                <div id="labels_section" [ngClass]="{'d-none': piiRadio != 'labels'}">
 
                                     <div class="fs-13 text-primary fw-bold mt-5">Results</div>
                                     <div class="row my-4">
                                         <div class="search col-6" style="display: inline-block;">
                                             <i class="fa fa-search"></i>
-                                            <input type="text" name="row_text_search" placeholder="Search..." class="modal-input">
+                                            <div class="search forms mb-4">
+                                                <i class=" fa fa-search"></i>
+                                                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="entitySearchInputPii1" name="entitySearchInputPii1">
+                                            </div>
                                         </div>
                                         <div class="col-6">
                                             <ul class="nav pgn fw-bold float-end">
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-left"></i></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link nav-link-active">1</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link">2</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link">3</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link"><i class="fa-solid fa-chevron-right"></i></a>
-                                                </li>
+                                                <pagination-controls style="font-size: 13px" id="pii2" (pageChange)="p1.entitySearchInputPii1 = $event" previousLabel="" nextLabel="" [maxSize]="5"></pagination-controls>
                                             </ul>
                                         </div>
                                     </div>
@@ -423,34 +388,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="c-0">
-                                                <tr>
-                                                    <td>explain how you</td>
-                                                    <td class="text-end">99%</td>
+                                                <tr *ngFor="let str of viewData.piiEntitiesResults.Entities|paginate: {id:'pii2', itemsPerPage: 5, currentPage: p1.entitySearchInputPii1  } |filter:entitySearchInputPii1">
+                                                    <!-- <tr *ngFor="let str of users1 | paginate: { itemsPerPage: 6, currentPage: p2, totalItems: total2} |filter:entitySearchInputPii1"> -->
+
+                                                    <td>{{str.Type}}</td>
+                                                    <td class="text-end">{{str.Score}}%</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>mistaken idea of denouncing</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>expounding the actual teachings</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>great explorer of the truth</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>explain how you</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>mistaken idea of denouncing</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>expounding the actual teachings</td>
-                                                    <td class="text-end">99%</td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -461,15 +405,33 @@
                                     <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
 
                                 </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponsePii" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponsePii)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- table pan fifth -->
+                            <!-- Sentiment -->
                             <div class="tab-pane" id="sentiment-tab-pane" role="tabpanel">
                                 <div>
                                     <label for="comprehendTextarea6" class="fw-bold open-sans pb-2">
                                         Analyzed Text
                                     </label>
-                                    <textarea name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea6" rows="6" placeholder="English, US" maxlength="685" onkeyup="getTextLength(685)" disabled="">{{comprehendTextarea1}}</textarea>
+                                    <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                        <span *ngFor="let str of response.syntaxResults.SyntaxTokens" class="ml-4" style="line-height: 24px;">{{str.Text}} </span>
+                                    </div>
                                 </div>
 
                                 <div class="fs-13 text-primary fw-bold mt-5 mb-3">Results</div>
@@ -484,20 +446,21 @@
                                         </thead>
                                         <tbody class="c-0">
                                             <tr>
-                                                <td>Netural</td>
-                                                <td class="text-end">0.98</td>
+                                                <td>Neutral</td>
+                                                <td class="text-end">{{roundoff(response.sentiment.SentimentScore.Neutral)}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Positive</td>
-                                                <td class="text-end">0.00</td>
+                                                <td class="text-end">{{ roundoff( response.sentiment.SentimentScore.Positive)}}
+                                                <td>
                                             </tr>
                                             <tr>
                                                 <td>Negative</td>
-                                                <td class="text-end">0.01</td>
+                                                <td class="text-end">{{roundoff(response.sentiment.SentimentScore.Negative)}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Mixed</td>
-                                                <td class="text-end">0.00</td>
+                                                <td class="text-end">{{roundoff(response.sentiment.SentimentScore.Mixed)}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -508,37 +471,117 @@
                                     <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
 
                                 </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponseSentiment" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseSentiment)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- table pan sixth -->
+                            <!-- Syntax -->
                             <div class="tab-pane" id="syntax-tab-pane" role="tabpanel">
+                                <div>
+                                    <label for="comprehendTextarea6" class="fw-bold open-sans pb-2">
+                                        Analyzed Text
+                                    </label>
+                                    <div name="input_text" class="form-control textarea fs-13 px-3 pt-12 c-8" id="comprehendTextarea2" style="background-color: #F0F0F0; ">
+                                        <span *ngFor="let str of response.syntaxResults.SyntaxTokens" style="line-height: 24px;" class="ml-4">{{str.Text}} </span>
+                                    </div>
+                                </div>
 
+                                <div class="fs-13 text-primary fw-bold mt-5 mb-3">Results</div>
+                                <div class="row my-4">
+                                    <div class="col-6">
+                                        <div class="search forms mb-4">
+                                            <i class=" fa fa-search"></i>
+                                            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="entitySearchInputSyntax" name="entitySearchInputSyntax">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="nav pgn fw-bold float-end">
+                                            <pagination-controls style="font-size: 13px" id="syntax" (pageChange)="p1.entitySearchInputSyntax = $event" previousLabel="" nextLabel="" [maxSize]="5"></pagination-controls>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table fs-13" id="object_recognition">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0">Word</th>
+                                                <th class="border-0">Part of speech</th>
+                                                <th class="text-end border-0">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="c-0">
+                                            <tr *ngFor="let str of viewData.syntaxResults.SyntaxTokens|paginate: {id:'syntax', itemsPerPage: 5, currentPage: p1.entitySearchInputSyntax } |filter:entitySearchInputSyntax">
+                                                <td>{{str.Text}} </td>
+                                                <td>{{ getSyntax(str.PartOfSpeech.Tag)}}</td>
+                                                <td class="text-end">{{roundoff(str.PartOfSpeech.Score)}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-5">
+                                    <div class="fs-13 text-primary fw-bold mt-5">Application Integration</div>
+                                    <div class="fs-13 mt-3 c-0">API call and API response of DetectEntities API.</div>
+
+                                </div>
+                                <div class="row mb-3 sdd">
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 17.5px;">
+                                        <div class="HTMLContainer fs-11">
+                                            <app-editor [(text)]="jsonResponseSyntax" mode="json" theme="eclipse"></app-editor>
+
+                                        </div>
+                                        <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseSyntax)">copy text</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="row mb-3 sdd">
+                    <!-- <div class="row mb-3 sdd">
                         <div class="col-6" style="padding-right: 17.5px;">
                             <div class="HTMLContainer fs-11">
                                 <app-editor [(text)]="jsonInputData" mode="json" theme="eclipse"></app-editor>
 
                             </div>
-                            <button class="button button-sm text-uppercase mt-18p float-end" (click)="copyText(jsonInputData)">copy text</button>
+                            <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonInputData)">copy text</button>
                         </div>
                         <div class="col-6" style="padding-right: 17.5px;">
                             <div class="HTMLContainer fs-11">
-                                <app-editor [(text)]="jsonInputData2" mode="json" theme="eclipse"></app-editor>
+                                <app-editor [(text)]="jsonResponseEntities" mode="json" theme="eclipse"></app-editor>
 
                             </div>
-                            <button class="button button-sm text-uppercase mt-18p float-end" (click)="copyText(jsonInputData2)">copy text</button>
+                            <button class="button button-sm text-uppercase mt-18p float-end my-2" (click)="copyText(jsonResponseEntities)">copy text</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
+
             </div>
         </form>
     </div>
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btnprimary">RESET DEMO</button>
+    <button type="button" class="btn btnprimary" (click)="reset() ">RESET DEMO</button>
 </div>

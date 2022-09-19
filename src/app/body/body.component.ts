@@ -16,43 +16,61 @@ export class BodyComponent implements OnInit {
   res: number = 200;
   searchinput: string = '';
 
-  database: {
-    title: string,
-    value: {
-      title: string,
-      link: string
-    }[],
-    color: string,
-  }[] = [{
-    title: '',
+  systemAndSecurity: string[] = ["Firewall", "Registry", "Services"];
+  networkandinternet: string[] = ["WiFi and Bluetooth Radio", "WiFi Profiles", "IP Printer"];
+
+  database = [{
+    title: "TEXT EXTRACTION FROM IMAGE",
     value: [{
-      title: '',
-      link: ''
+      title: "Image To Text",
+      link: "/textract"
     }],
-    color: '',
+    color: "#0091FF",
+  }, {
+    title: "SPEECH TO TEXT",
+    value: [{
+      title: "Speech To Text",
+      link: "/speech-to-text"
+    }],
+    color: "#6ED301",
+  }, {
+    title: "TEXT TO SPEECH",
+    value: [{
+      title: "Text To Speech",
+      link: "/text-to-speech"
+    }],
+    color: "#0091FF",
+  }, {
+    title: "IMAGE RECOGNITION",
+    value: [{
+      title: "Image Recognition",
+      link: "/image-recognition"
+    }],
+    color: "#00D38D",
+  }, {
+    title: "COMPREHEND",
+    value: [{
+      title: "Comprehend",
+      link: "/comprehend"
+    }],
+    color: "#FF0000"
   }];
 
-  viewdata = this.getItems() ? this.getItems() : [];
+  viewdata = this.getItems();
   @Input() sort = 0;
   constructor() {
 
   }
 
-  async ngOnInit() {
-    this.loader = true;
-    await this.fetchData();
-    this.loader = false;
-
-
-    if (!this.getItems()) {
+  ngOnInit() {
+    if (this.getItems() == null) {
       this.setItems(this.database);
       this.viewdata = this.getItems();
     }
     if (this.sort == 0)
       this.setItems(this.database);
-    console.log(this.database)
-    console.log(this.viewdata);
-    console.log(this.sort);
+    //console.log(this.viewdata);
+    //console.log(this.sort);
     if (this.sort == 1) {
       // debugger;
       if (localStorage.getItem("inputEle")) {
@@ -132,130 +150,5 @@ export class BodyComponent implements OnInit {
   }
   setItems(data: any) {
     localStorage.setItem("APIData", JSON.stringify(data))
-  }
-
-
-  async fetchData() {
-    await fetch("http://localhost:3000/cards")
-      .then((response) => response.json())
-      .then((results) => {
-        console.log(results);
-        this.database = results;
-        console.log(this.database);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.database = [{
-          title: "TEXT EXTRACTION FROM IMAGE",
-          value: [{
-            title: "Image To Text",
-            link: "/textract"
-          }],
-          color: "#0091FF",
-        }, {
-          title: "SPEECH TO TEXT",
-          value: [{
-            title: "Speech To Text",
-            link: "/speech-to-text"
-          }],
-          color: "#6ED301",
-        }, {
-          title: "TEXT TO SPEECH",
-          value: [{
-            title: "Text To Speech",
-            link: "/text-to-speech"
-          }],
-          color: "#0091FF",
-        }, {
-          title: "IMAGE RECOGNITION",
-          value: [{
-            title: "Image Recognition",
-            link: "/image-recognition"
-          }],
-          color: "#00D38D",
-        }, {
-          title: "COMPREHEND",
-          value: [{
-            title: "Comprehend",
-            link: "/comprehend"
-          }],
-          color: "#FF0000"
-        }, {
-          title: "USER ACCOUNTS",
-          value: [{
-            title: "User Management",
-            link: "/"
-          }],
-          color: "#6439FD"
-        }, {
-          title: "APPEARANCE AND PERSONALIZATION",
-          value: [{
-            title: "Display",
-            link: "/"
-          }, {
-            title: "Fonts",
-            link: "/"
-          }],
-          color: "#FA6400"
-        }, {
-          title: "CLOCK AND REGION",
-          value: [{
-            title: "Date/Time",
-            link: "/"
-          }, {
-            title: "Region",
-            link: "/"
-          }],
-          color: "#C5C5C5"
-        }, {
-          title: "EASE OF ACCESS",
-          value: [{
-            title: "Activate Windows Kiosk Mode",
-            link: "/"
-          }, {
-            title: "Shortcut",
-            link: "/"
-          }],
-          color: "#000000"
-        }, {
-          title: "USER ACCOUNTS",
-          value: [{
-            title: "User Management",
-            link: "/"
-          }],
-          color: "#6439FD"
-        }, {
-          title: "APPEARANCE AND PERSONALIZATION",
-          value: [{
-            title: "Display",
-            link: "/"
-          }, {
-            title: "Fonts",
-            link: "/"
-          }],
-          color: "#FA6400"
-        }, {
-          title: "CLOCK AND REGION",
-          value: [{
-            title: "Date/Time",
-            link: "/"
-          }, {
-            title: "Region",
-            link: "/"
-          }],
-          color: "#C5C5C5"
-        }, {
-          title: "EASE OF ACCESS",
-          value: [{
-            title: "Activate Windows Kiosk Mode",
-            link: "/"
-          }, {
-            title: "Shortcut",
-            link: "/"
-          }],
-          color: "#000000"
-        },];
-      })
-
   }
 }

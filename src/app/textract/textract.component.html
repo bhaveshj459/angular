@@ -4,20 +4,17 @@
 </div>
 <div class="modal-body modal-dialog-scrollable">
     <div class="body-sections">
-        <div class="row">
+        <div class="row" style="height: 519px;">
             <div class="col-sm-6">
                 <div class="section-title">Document Name</div>
                 <div class="image-section">
-                    <img [src]="url" alt="">
+                    <img [src]="url" alt="" *ngIf="url">
+
                 </div>
                 <div class="row buttondiv">
-                    <select name="image-file" id="dropdown" class="col-6 modal-select modal-select-sm c-0">
-                        <option value="null">Choose Sample Document</option>
-                        <option value="English, UK">English, UK</option>
-                        <option value="Hindi, IND">Hindi, IND</option>
-                    </select>
-                    <input type="file" id="imagfile" (change)="selectFile($event)" class="custom-file-input" placeholder="Upload Document" hidden><label for="imagfile" class="filelabel col-6">Upload Document</label>
+                    <input type="file" id="imagfile" (change)="selectFile($event)" class="custom-file-input" placeholder="Upload Document" hidden [(ngModel)]="change" name="change" accept=".jpg,.png,.jpeg"><label for="imagfile" class="filelabel " [ngClass]="loader? 'my-disable':''">Upload Document</label>
                 </div>
+
             </div>
             <div class="col-sm-6 rightsec">
                 <div class="section-title">Results</div>
@@ -40,19 +37,17 @@
                     <div class="tab-pane fade show active" id="raw-text" role="tabpanel" aria-labelledby="raw-text-tab">
                         <div class="row">
                             <div class="search col" style="display: inline-block;">
-                                <i class="fa fa-search"></i>
+                                <i class="fa fa-search" style="left: 27px !important;"></i>
                                 <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="rowTextInput" (keyup)="rowTextSearchFilter()">
                             </div>
-                            <select name="out-text" id="dropdown" class="output-text col-auto" style="display: inline-block;">
-                                <option value="null">Segment by line</option>
-                                <option value="English, UK">English, UK</option>
-                                <option value="Hindi, IND">Hindi, IND</option>
-                            </select>
+
                         </div>
                         <div class="container m-2 mt-4">
-                            <div class="text-center m-2 p-2" *ngIf="tags.length == 0">No Matching Records Found</div>
-                            <div class="tags" *ngFor="let tag of tags">{{tag}}
-
+                            <div class="text-center m-2 p-2" *ngIf="tags.length == 0 ">No Matching Records Found</div>
+                            <div class="loaderM " [ngClass]="loader? 'd-block':'d-none'" style="margin-left: 100px !important"></div>
+                            <div class="hideScroll" style="max-width: 100%;max-height: 390px;overflow: auto;">
+                                <div class="tags" *ngFor="let tag of tags">{{tag}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,11 +55,12 @@
                     <div class="tab-pane fade" id="forms" role="tabpanel" aria-labelledby="forms-tab">
                         <div class="search forms mb-4">
                             <i class=" fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;" [(ngModel)]="formsInput" (keyup)="formsSearchFilter()">
+                            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="formsInput">
                         </div>
                         <div class="text-center m-2 p-2" *ngIf="formsCardsData.length == 0">No Matching Records Found</div>
+                        <div class="loaderM " [ngClass]="loader? 'd-block':'d-none'" style="margin-left: 100px !important"></div>
                         <div class="row">
-                            <div class="forms-tab-cards col-6" *ngFor="let data of formsCardsData">
+                            <div class="forms-tab-cards col-6 hideScroll" *ngFor="let data of formsCardsData |filter:formsInput">
                                 <div class="forms-tab-cards-heading">{{data.heading}}</div>
                                 <div class="forms-tab-cards-body">{{data.data}}</div>
                             </div>
@@ -76,38 +72,40 @@
                     <div class="tab-pane fade" id="tables" role="tabpanel" aria-labelledby="tables-tab">
                         <div class="search forms">
                             <i class="fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search..." style="width: 100%;" [(ngModel)]="tableInput" (keyup)="tableSearchFilter()">
+                            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="tableInput">
                         </div>
                         <div class="text-center m-2 p-2" *ngIf="tableData.length == 0">No Matching Records Found</div>
-                        <table style="width: 100%; margin-top: 30px;" *ngIf="tableData.length!=0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Item</th>
-                                    <th scope="col">Qty.</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let items of tableData">
-                                    <td scope="row">{{items.Item}} </td>
-                                    <td>{{items.Qty}}</td>
-                                    <td>{{items.Price}}</td>
-                                    <td>{{items.Qty * items.Price}} </td>
-                                </tr>
+                        <div class="loaderM " [ngClass]="loader? 'd-block':'d-none'" style="margin-left: 100px !important"></div>
+                        <div style="max-width: 100%;max-height: 390px;overflow: auto;">
+                            <table style="width: 100%; margin-top: 30px;" *ngIf="tableData.length!=0">
+                                <thead>
+                                    <!-- <tr>
+                                                                <th scope="col">Item</th>
+                                                                <th scope="col">Qty.</th>
+                                                                <th scope="col">Price</th>
+                                                                <th scope="col">Total</th>
+                                                            </tr> -->
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let items of tableData|filter:tableInput">
+                                        <td scope="row" *ngFor="let data of items">{{data}} </td>
 
-                        </table>
+                                    </tr>
+
+                            </table>
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="queries" role="tabpanel" aria-labelledby="queries-tab">
                         <div class="search forms">
                             <i class="fa fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Enter a search query..." style="width: 260px; display: inline-block; height: 30px;" [(ngModel)]="queryInput" (keyup)="querySearchFilter()">
-                            <button type="button" class="btns btnsecondary">Submit</button>
+                            <input type="text" class="form-control" placeholder="Enter a search query..." style="display: inline-block;" [(ngModel)]="queryInput" (keyup)="querySearchFilter()">
+
                         </div>
                         <h3 class="label-query"><b> Note:</b> Limit of 200 characters per query. Duplicate queries not permitted</h3>
 
                         <div class="text-center m-2 p-2" *ngIf="queryData.length == 0">No Matching Records Found</div>
+                        <div class="loaderM " [ngClass]="loader? 'd-block':'d-none'" style="margin-left: 100px !important"></div>
                         <div class="query-sub-body" *ngFor="let query of queryData">
                             <h3 class="query-sub-heading"> {{query.ques}}?
                                 <label class="query-sub-heading-lable">Alias: {{query.alias}}</label>
@@ -128,6 +126,5 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btnsecondary" data-bs-dismiss="modal"><img src="assets/image/downloadlogo.jpg" alt="not dounf"> Download</button>
-    <button type="button" class="btn btnprimary">RESET DEMO</button>
+    <button type="button" class="btn btnprimary" (click)="reset()">RESET DEMO</button>
 </div>

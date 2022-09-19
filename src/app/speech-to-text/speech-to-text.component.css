@@ -2,12 +2,7 @@
     position: relative;
 }
 
-.modal-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #0091FF;
-    font-family: 'Open Sans';
-}
+
 
 .modal-body {
     height: auto;
@@ -25,7 +20,7 @@
 }
 
 .image-section {
-    height: 382px;
+    height: 300px;
     border: 1px solid #DDDDDD;
     border-radius: 8px;
     margin: 10px;
@@ -94,7 +89,7 @@
 
 .accordion-item {
     border: none;
-    border-bottom: solid 1px gray;
+    border-bottom: solid 1px #dee2e6;
 
 }
 

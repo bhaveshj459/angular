@@ -15,9 +15,6 @@
     overflow: auto;
 }
 
-.modal-footer {
-    right: 0%;
-}
 
 .wrapper {
     margin-left: 65%
@@ -29,12 +26,7 @@
 }
 
 
-.modal-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #0091FF;
-    font-family: 'Open Sans';
-}
+
 
 
 .body {
@@ -79,11 +71,22 @@ input:checked {
 
 select {
     width: 100%;
-    height: 42px;
+    font-size: 13px;
     border: 1px solid #DDDDDD;
     border-radius: 21px;
     color: #888888;
     background: transparent;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 99%;
+    background-position-y: 5px;
+    border: 1px solid #dfdfdf;
 }
 
 textarea {
@@ -106,7 +109,7 @@ textarea {
 
 }
 
-.clrbut {
+/* .clrbut {
     box-shadow: 0px 3px 6px #00000029;
     border: 1px solid #0091FF;
     border-radius: 24px;
@@ -116,11 +119,11 @@ textarea {
     font-size: 13px;
     width: 98px;
     height: 30px;
-    /* padding: 0px; */
+    padding: 0px;
     background: transparent;
     float: right;
     text-transform: uppercase;
-}
+} */
 
 .btnsecondary {
     box-shadow: 0px 3px 6px #00000029;
@@ -188,4 +191,14 @@ textarea {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.customdisabled {
+    background-color: #0091ffaf;
+    border: 1px solid #0091ff76;
+    pointer-events: none !important;
+}
+
+input:focus {
+    box-shadow: #3498db;
 }

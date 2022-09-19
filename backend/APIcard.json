@@ -1,0 +1,54 @@
+[
+    {
+    "title": "TEXT EXTRACTION FROM IMAGE",
+    "color": "#0091FF"
+  },
+  {
+    "title": "SPEECH TO TEXT",
+
+    "color": "#6ED301"
+  }, {
+    "title": "TEXT TO SPEECH",
+
+    "color": "#0091FF"
+  }, {
+    "title": "IMAGE RECOGNITION",
+
+    "color": "#00D38D"
+  }, {
+    "title": "COMPREHEND",
+
+    "color": "#FF0000"
+  }, {
+    "title": "USER ACCOUNTS",
+
+    "color": ["#6439FD"]
+  }, {
+    "title": "APPEARANCE AND PERSONALIZATION",
+
+    "color": "#FA6400"
+  }, {
+    "title": "CLOCK AND REGION",
+
+    "color": "#C5C5C5"
+  }, {
+    "title": "EASE OF ACCESS",
+
+    "color": "#000000"
+  }, {
+    "title": "USER ACCOUNTS",
+
+    "color": "#6439FD"
+  }, {
+    "title": "APPEARANCE AND PERSONALIZATION",
+
+    "color": "#FA6400"
+  }, {
+    "title": "CLOCK AND REGION",
+
+    "color": "#C5C5C5"
+  }, {
+    "title": "EASE OF ACCESS",
+    "color": "#000000"
+  }
+]

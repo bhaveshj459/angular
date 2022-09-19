@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faTurkishLiraSign } from '@fortawesome/free-solid-svg-icons';
+declare var $: any;
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-speech-to-text',
@@ -12,9 +14,17 @@ export class SpeechToTextComponent implements OnInit {
   financial = false;
   countP1 = 0;
   countP2 = 0;
-  constructor() { }
+  loader = false;
+  toBeDisplayedtext = 'Submit';
+  file: any;
+  fileName = '';
+  outputData: any;
+  fileUrl: any;
+  toSubmit = false;
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+
   }
   toggleChanges() {
 
@@ -39,7 +49,7 @@ export class SpeechToTextComponent implements OnInit {
   }
 
   testFunc() {
-    console.log(document.getElementById("financial1_list")?.children.length)
+    //console.log(document.getElementById("financial1_list")?.children.length)
   }
 
 
@@ -59,7 +69,7 @@ export class SpeechToTextComponent implements OnInit {
       if (parentEle2.children[i].children[0].checked)
         this.countP2++
     }
-    console.log(this.countP1);
+    //console.log(this.countP1);
     this.checkParent();
   }
 
@@ -93,4 +103,69 @@ export class SpeechToTextComponent implements OnInit {
     this.calcTotalClicked()
   }
 
+
+  selectFile(event: any) {
+    this.file = event.target.files[0];
+    this.fileName = this.file.name;
+    this.toSubmit = true;
+    // this.getTokenId(event.target.files[(event.target.files.length) - 1]);
+  }
+
+  async getTokenId(file: any) {
+    this.loader = true;
+    this.toBeDisplayedtext = 'Transcription...';
+    var formdata = new FormData();
+    formdata.append("File", file);
+    formdata.append("Settings", "{\"setting1\": \"settings\", \"settings2\": \"settings\"}");
+
+    await fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        //this.loader = false;
+        this.toBeDisplayedtext = 'Getting Transcription Job ';
+        this.getData(result.TranscriptionJobName)
+      })
+      .catch(error => {
+        console.log('error', error);
+        this.loader = false;
+        this.toBeDisplayedtext = 'Failed To Upload';
+      });
+  }
+
+  async getData(tokenID: string) {
+
+
+    fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" + tokenID, {
+      method: 'GET',
+      redirect: 'follow'
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result.response.data.results.transcripts[0].transcript
+        );
+        this.loader = false;
+        this.toBeDisplayedtext = 'DONE!';
+        this.outputData = result.response.data.results.transcripts[0].transcript;
+        const data = this.outputData;
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+
+        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+
+        this.toSubmit = false;
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  clearDemo() {
+    this.loader = false;
+    this.toBeDisplayedtext = 'Select File';
+    this.outputData = null;
+    this.file = null;
+    this.fileName = '';
+  }
 }

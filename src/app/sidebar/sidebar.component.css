@@ -1,4 +1,4 @@
-img {
+svg {
     background: #F5F5F5 0% 0% no-repeat padding-box;
     border: 1px solid #DDDDDD;
     border-radius: 2px;
@@ -20,7 +20,7 @@ img {
 }
 
 .sidebar {
-    border-right: #AAAAAA solid 2px;
+    border-right: #AAAAAA solid 1px;
     height: 100%;
 
 }

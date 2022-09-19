@@ -15,7 +15,7 @@
 }
 
 hr {
-    border-color: #AAAAAA;
+    /* border-color: #AAAAAA; */
     top: 100%;
 
 }
@@ -27,7 +27,7 @@ hr {
     padding: 0px 32px;
     font-family: 'Oswald';
     color: #000000;
-    border-left: #AAAAAA dotted 2px;
+    border-left: #DDDDDD dotted 3px;
 }
 
 .subheading {
@@ -58,27 +58,26 @@ hr {
     border: none;
     border-bottom: #AAAAAA solid 2px;
     width: 350px;
-    font-size: 18px;
-    font-weight: 900;
+    font-size: 15px;
+    font-weight: 500;
     font-family: 'Open Sans';
-    color: #888888;
+    /* color: #888888; */
 }
 
 ::placeholder {
-    color: #888888;
     font-size: 18px;
-    font-weight: bold;
     font-family: 'Open Sans';
     opacity: 1;
+    font-weight: 700;
 }
 
 input:focus {
     outline: none;
     border-bottom: #AAAAAA solid 2px;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
     font-family: 'Open Sans';
-    color: #888888;
+    /* color: #888888; */
 }
 
 #search-label {
