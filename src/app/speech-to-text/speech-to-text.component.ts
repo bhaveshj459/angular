@@ -118,23 +118,30 @@ export class SpeechToTextComponent implements OnInit {
     formdata.append("File", file);
     formdata.append("Settings", "{\"setting1\": \"settings\", \"settings2\": \"settings\"}");
 
-    await fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow'
-    })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result)
-        //this.loader = false;
-        this.toBeDisplayedtext = 'Getting Transcription Job ';
-        this.getData(result.TranscriptionJobName)
+    try {
+      await fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
       })
-      .catch(error => {
-        console.log('error', error);
-        this.loader = false;
-        this.toBeDisplayedtext = 'Failed To Upload';
-      });
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          //this.loader = false;
+          this.toBeDisplayedtext = 'Getting Transcription Job ';
+          this.getData(result.TranscriptionJobName)
+        })
+        .catch(error => {
+          console.log('error', error);
+          this.loader = false;
+          this.toBeDisplayedtext = 'Failed To Upload';
+        });
+    }
+    catch (error) {
+      console.log('error', error);
+      this.loader = false;
+      this.toBeDisplayedtext = 'Failed To Upload';
+    }
   }
 
   async getData(tokenID: string) {

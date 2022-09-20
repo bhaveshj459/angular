@@ -153,31 +153,37 @@ export class ImageRecognitionComponent implements OnInit {
     let body = {
       method: 'POST',
       body: data
-    }
-    await fetch(url, body)
-      .then(resp => resp.json())
-      .then(respData => {
-        this.imageresult = respData;
-        this.imageresult.body.Labels = respData.body.Labels.filter((element: any) => {
-          if (element.Confidence > 82) {
-            return element
-          }
+    };
+    try {
+      await fetch(url, body)
+        .then(resp => resp.json())
+        .then(respData => {
+          this.imageresult = respData;
+          this.imageresult.body.Labels = respData.body.Labels.filter((element: any) => {
+            if (element.Confidence > 82) {
+              return element
+            }
+          })
+          this.database = this.imageresult.body.Labels.map((element: any) => ({
+            ...element,
+            // @ts-ignore
+            Confidence: parseInt(element.Confidence)
+          }))
+          //console.log(this.database);
+          this.results = this.database;
+          this.dowload = true;
+          this.loader = false;
+          this.toUpload = false;
         })
-        this.database = this.imageresult.body.Labels.map((element: any) => ({
-          ...element,
-          // @ts-ignore
-          Confidence: parseInt(element.Confidence)
-        }))
-        //console.log(this.database);
-        this.results = this.database;
-        this.dowload = true;
-        this.loader = false;
-        this.toUpload = false;
-      })
-      .catch(err => {
-        //console.log(err);
-        this.loader = false;
-      })
+        .catch(err => {
+          //console.log(err);
+          this.loader = false;
+        })
+    }
+    catch (err) {
+      this.loader = false;
+      console.log(err);
+    }
   }
 
   clr() {
@@ -188,6 +194,9 @@ export class ImageRecognitionComponent implements OnInit {
     this.change = '';
     this.dowload = false;
     this.toUpload = true;
+    this.height = 0;
+    this.width = 0;
+
   }
 
   exportexcel(): void {

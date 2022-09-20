@@ -61,7 +61,7 @@ export class ComprehendComponent implements OnInit {
     }
   });
 
-  comprehendTextarea1: string = "Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000. ";
+  comprehendTextarea1: string = "Throughout the interwar period, elements of the fleet conducted visits to ports throughout the Mediterranean, but few fleet exercises occurred due to budget pressures. In 1930, the Maritime Air Force was divorced from Royal Yugoslav Army control, and the naval air arm began to develop significantly, including the establishment of bases along the Adriatic coast. The following year, a British-made flotilla leader was commissioned with the idea that the KM might be able to operate in the Mediterranean alongside the British and French navies.";
 
 
 
@@ -84,7 +84,7 @@ export class ComprehendComponent implements OnInit {
 
   reset() {
     this.response = null;
-    this.comprehendTextarea1 = "Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000. ";
+    this.comprehendTextarea1 = "Throughout the interwar period, elements of the fleet conducted visits to ports throughout the Mediterranean, but few fleet exercises occurred due to budget pressures. In 1930, the Maritime Air Force was divorced from Royal Yugoslav Army control, and the naval air arm began to develop significantly, including the establishment of bases along the Adriatic coast. The following year, a British-made flotilla leader was commissioned with the idea that the KM might be able to operate in the Mediterranean alongside the British and French navies.";
     this.entitySearchInput = '';
     this.entitySearchInputPii = '';
     this.entitySearchInputPii1 = '';
@@ -100,65 +100,71 @@ export class ComprehendComponent implements OnInit {
     //console.log(this.piiRadio)
     if (this.comprehendTextarea1.length != 0) {
       this.loader = true;
-      await fetch("https://l6evezpefe.execute-api.us-east-1.amazonaws.com/final/comprehend", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "text": text })
-      })
-        .then(response => response.json())
-        .then(respdata => {
-          //console.log(respdata.entities);
-          this.response = respdata;
-          this.viewData = this.response;
-          this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
-            ...element,
-            // @ts-ignore
-            Score: Math.floor(element.Score * 100)
-          }));
-          this.response.keyPhaseResults.KeyPhrases = this.response.keyPhaseResults.KeyPhrases.map((element: any) => ({
-            ...element,
-            // @ts-ignore
-            Score: Math.floor(element.Score * 100)
-          }));
-          this.response.languageResults.Languages = this.response.languageResults.Languages.map((element: any) => ({
-            ...element,
-            // @ts-ignore
-            Score: Math.floor(element.Score * 100),
-            LanguageCode: this.getLanguage(element.LanguageCode)
-          }));
-          this.response.piiEntitiesResults.Entities = this.response.piiEntitiesResults.Entities.map((element: any) => ({
-            ...element,
-            // @ts-ignore
-            Score: Math.floor(element.Score * 100)
-          }));
-          // this.response.sentiment.SentimentScore.Positive = (Number.parseFloat(this.response.sentiment.SentimentScore.Positive)).toFixed(2);
-          // this.response.sentiment.SentimentScore.Negative = this.response.sentiment.SentimentScore.Negative.toFixed(2);
-          // this.response.sentiment.SentimentScore.Neutral = this.response.sentiment.SentimentScore.Neutral.toFixed(2);
-          // this.response.sentiment.SentimentScore.Mixed = this.response.sentiment.SentimentScore.Mixed.toFixed(2);
+      try {
+        await fetch("https://l6evezpefe.execute-api.us-east-1.amazonaws.com/final/comprehend", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ "text": text })
+        })
+          .then(response => response.json())
+          .then(respdata => {
+            //console.log(respdata.entities);
+            this.response = respdata;
+            this.viewData = this.response;
+            this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
+              ...element,
+              // @ts-ignore
+              Score: Math.floor(element.Score * 100)
+            }));
+            this.response.keyPhaseResults.KeyPhrases = this.response.keyPhaseResults.KeyPhrases.map((element: any) => ({
+              ...element,
+              // @ts-ignore
+              Score: Math.floor(element.Score * 100)
+            }));
+            this.response.languageResults.Languages = this.response.languageResults.Languages.map((element: any) => ({
+              ...element,
+              // @ts-ignore
+              Score: Math.floor(element.Score * 100),
+              LanguageCode: this.getLanguage(element.LanguageCode)
+            }));
+            this.response.piiEntitiesResults.Entities = this.response.piiEntitiesResults.Entities.map((element: any) => ({
+              ...element,
+              // @ts-ignore
+              Score: Math.floor(element.Score * 100)
+            }));
+            // this.response.sentiment.SentimentScore.Positive = (Number.parseFloat(this.response.sentiment.SentimentScore.Positive)).toFixed(2);
+            // this.response.sentiment.SentimentScore.Negative = this.response.sentiment.SentimentScore.Negative.toFixed(2);
+            // this.response.sentiment.SentimentScore.Neutral = this.response.sentiment.SentimentScore.Neutral.toFixed(2);
+            // this.response.sentiment.SentimentScore.Mixed = this.response.sentiment.SentimentScore.Mixed.toFixed(2);
 
-          //console.log("rep" + this.response.entities)
-          this.jsonInputData = `{
+            //console.log("rep" + this.response.entities)
+            this.jsonInputData = `{
   "Text" : ` + text + `
 }`;
-          this.jsonResponseEntities = JSON.stringify(respdata.entities, null, 2);
-          this.jsonResponseKeyPhase = JSON.stringify(respdata.keyPhaseResults, null, 2);
-          this.jsonResponseSentiment = JSON.stringify(respdata.sentiment, null, 2);
-          this.jsonResponseSyntax = JSON.stringify(respdata.syntaxResults, null, 2);
-          this.jsonResponsePii = JSON.stringify(respdata.piiEntitiesResults, null, 2);
-          this.jsonResponseLanguage = JSON.stringify(respdata.languageResults, null, 2);
+            this.jsonResponseEntities = JSON.stringify(respdata.entities, null, 2);
+            this.jsonResponseKeyPhase = JSON.stringify(respdata.keyPhaseResults, null, 2);
+            this.jsonResponseSentiment = JSON.stringify(respdata.sentiment, null, 2);
+            this.jsonResponseSyntax = JSON.stringify(respdata.syntaxResults, null, 2);
+            this.jsonResponsePii = JSON.stringify(respdata.piiEntitiesResults, null, 2);
+            this.jsonResponseLanguage = JSON.stringify(respdata.languageResults, null, 2);
 
 
-          this.loader = false;
+            this.loader = false;
 
-        })
+          })
 
-        .catch(err => {
-          //console.log(err);
-          this.loader = false;
-        })
+          .catch(err => {
+            //console.log(err);
+            this.loader = false;
+          })
+      }
+      catch (err) {
+        this.loader = false;
+        console.log(err);
+      }
     }
   }
 
@@ -180,48 +186,55 @@ export class ComprehendComponent implements OnInit {
     });
     return result
   }
-
-  setColor(type: string) {
+  typearray: {
+    type: string,
+    color: string
+  }[] = [];
+  setColor(typeC: string) {
     //debugger;
-    if (type.toLowerCase().includes("person")) {
+    if (typeC.toLowerCase().includes("person")) {
       return "#FA6400";
     }
-    else if (type.toLowerCase().includes("organization")) {
+    // else if (typeC.toLowerCase().includes("location")) {
+    //   return "#00D38D";
+    // }
+    else if (typeC.toLowerCase().includes("organization")) {
       return "#0091FF";
     }
-    else if (type.toLowerCase().includes("other")) {
+    else if (typeC.toLowerCase().includes("other")) {
       return "#77FF00";
     }
-    else if (type.toLowerCase().includes("quantity")) {
+    else if (typeC.toLowerCase().includes("quantity")) {
       return "#FF0000";
     }
-    else if (type.toLowerCase().includes("date")) {
+    else if (typeC.toLowerCase().includes("date")) {
       return "#6439FD";
     }
-    else if (type.toLowerCase().includes("keyphase")) {
+    else if (typeC.toLowerCase().includes("keyphase")) {
       return "#007dbc";
     }
     else {
-      return "null";
+      if (typeC) {
+        for (let index = 0; index <= this.typeColor.length; index++) {
+          let ele: any = this.typearray.filter((elemet: any) => elemet.type.toLowerCase().includes(typeC.toLowerCase()));
+          if (ele.length != 0) {
+            return ele[0].color;
+          }
+          else {
+            this.typearray.push({
+              type: typeC,
+              color: this.getRandomColor()
+            })
+            index--;
+          }
+
+        }
+      }
     }
 
   }
 
-  search(entitySearchInput: string) { };
 
-  // search(entitySearchInput: string) {
-  //   if (entitySearchInput.length >= 1) {
-  //     // @ts-ignore
-  //     let filterArray = this.viewData.entities.Entities.filter(data => data.Text.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Type.toLowerCase().includes(entitySearchInput.toLowerCase()) || data.Score === parseInt(entitySearchInput));
-  //     this.viewData.entities.Entities = filterArray;
-
-  //   }
-  //   else {
-  //     this.viewData.entities.Entities = this.response.entities.Entities;
-  //   }
-
-  //   //console.log("this is herer " + this.response.entities.Entities.length)
-  // }
   searchPii(entitySearchInput: string) {
     if (entitySearchInput.length >= 1) {
       //debugger;
@@ -279,50 +292,13 @@ export class ComprehendComponent implements OnInit {
     }
 
   }
-
-  // len: any;
-  // getUsers(data: any) {
-  //   this.users = data;
-  //   this.len = data.length;
-  //   this.total = this.len;
-  // }
-  // getUsers1(data: any) {
-  //   this.users = data;
-  //   this.len = data.length;
-  //   this.total = this.len;
-  // }
-
-  // pageChangeEvent(event: number, data: any, val: string) {
-  //   this.p = event;
-  //   this.users = data;
-  //   this.len = data.length;
-  //   this.total = this.len;
-  // }
-  // p2: number = 1;
-  // users1: any;
-  // total2: number = 0;
-  // pageChangeEvent1(event: number) {
-  //   this.p2 = event;
-  //   this.users1 = this.viewData.piiEntitiesResults.Entities;
-  //   this.len = this.users1.length;
-  //   this.total2 = this.len;
-  // }
-
-  // pagination(data: any, view: any[], postion: number) {
-  //   //console.log(this.viewData.view)
-  //   let noOfPage = data.length / 6;
-  //   this.paginationArray = [];
-  //   view = [];
-  //   for (let index = 0; index < noOfPage; index++) {
-
-  //     this.paginationArray.push(index + 1)
-
-  //     for (let index = ((postion - 1) * 6); index < ((postion * 6) - 1); index++) {
-  //       // debugger
-  //       view.push(data[index]);
-  //     }
-  //   }
-  //   //this.viewData.entities.Entities = view;
-  // }
+  letters = '0123456789ABCDEF';
+  getRandomColor() {
+    var color = '#'; // <-----------
+    for (var i = 0; i < 6; i++) {
+      color += this.letters[Math.floor(Math.random() * 16)];
+    }
+    return color
+  }
 
 }

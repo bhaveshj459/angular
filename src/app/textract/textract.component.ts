@@ -100,81 +100,87 @@ export class TextractComponent implements OnInit {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "image/png");
     this.loader = true;
-    await fetch("https://wmo8056gr6.execute-api.ap-south-1.amazonaws.com/dev/textractapiresource", {
-      method: 'POST',
-      headers: myHeaders,
-      body: file,
-      redirect: 'follow'
-    })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        this.rowTextDatabase = result.body;
-        this.tags = this.rowTextDatabase;
-        this.isUploaded = true;
-        this.loader = false;
-        // this.formsCardsDatabase = result.kvs.map((key: any, value: any) => key + "_" + value);
-        // console.log(this.formsCardsData)
-        this.formsCardsDatabase = [];
-        this.tableDatabase = [];
-        for (const [key, value] of Object.entries(result.kvs)) {
-          this.formsCardsDatabase.push({
-            heading: key,
-            data: value
-          })
-        }
-        this.tableDatabase = [];
-        // for (const [key, value] of Object.entries(result.table[0])) {
-        //   this.formsCardsDatabase.push({
-        //     heading: key,
-        //     data: value
-        //   })
-        //   this.
-        // }
 
-        result.table.forEach((element: any) => {
-          let obj = [];
-          //console.log(Object.keys(element));
-          for (let index = 1; index <= Object.keys(element).length; index++) {
-            var obj2 = []
-            for (let index1 = 1; index1 <= Object.keys(element[index]).length; index1++) {
-              obj2.push(element[index][index1]);
-            }
-            obj.push(obj2);
+    try {
+      await fetch("https://wmo8056gr6.execute-api.ap-south-1.amazonaws.com/dev/textractapiresource", {
+        method: 'POST',
+        headers: myHeaders,
+        body: file,
+        redirect: 'follow'
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.rowTextDatabase = result.body;
+          this.tags = this.rowTextDatabase;
+          this.isUploaded = true;
+          this.loader = false;
+          // this.formsCardsDatabase = result.kvs.map((key: any, value: any) => key + "_" + value);
+          // console.log(this.formsCardsData)
+          this.formsCardsDatabase = [];
+          this.tableDatabase = [];
+          for (const [key, value] of Object.entries(result.kvs)) {
+            this.formsCardsDatabase.push({
+              heading: key,
+              data: value
+            })
           }
-
-          console.log(obj);
-          //@ts-ignore
-          this.tableDatabase = obj;
-          this.tableData = this.tableDatabase
-          // let obj={
-          //   Item: element.'1',
-          //   Qty: element,
-          //   Price: element,
-          //   Total: element
+          this.tableDatabase = [];
+          // for (const [key, value] of Object.entries(result.table[0])) {
+          //   this.formsCardsDatabase.push({
+          //     heading: key,
+          //     data: value
+          //   })
+          //   this.
           // }
 
-          // elem.map((element: any) => (
-          //   //console.log(element)
-          //   {
-          //     ...element,
+          result.table.forEach((element: any) => {
+            let obj = [];
+            //console.log(Object.keys(element));
+            for (let index = 1; index <= Object.keys(element).length; index++) {
+              var obj2 = []
+              for (let index1 = 1; index1 <= Object.keys(element[index]).length; index1++) {
+                obj2.push(element[index][index1]);
+              }
+              obj.push(obj2);
+            }
 
-          //     Item: element,
-          //     Qty: element,
-          //     Price: element,
-          //     Total: element
-          //   }
-          // ))
+            console.log(obj);
+            //@ts-ignore
+            this.tableDatabase = obj;
+            this.tableData = this.tableDatabase
+            // let obj={
+            //   Item: element.'1',
+            //   Qty: element,
+            //   Price: element,
+            //   Total: element
+            // }
+
+            // elem.map((element: any) => (
+            //   //console.log(element)
+            //   {
+            //     ...element,
+
+            //     Item: element,
+            //     Qty: element,
+            //     Price: element,
+            //     Total: element
+            //   }
+            // ))
+          });
+
+          this.formsCardsData = this.formsCardsDatabase
+
+        })
+        .catch(error => {
+          this.loader = false;
+          console.log('error', error);
         });
-
-        this.formsCardsData = this.formsCardsDatabase
-
-      })
-      .catch(error => {
-        debugger;
-        this.loader = false;
-        console.log('error', error);
-      });
+    }
+    catch (error) {
+      this.loader = false;
+      console.log('error', error);
+    }
   }
 
   reset() {

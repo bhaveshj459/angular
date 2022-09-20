@@ -92,7 +92,7 @@
                                         </thead>
                                         <tbody class="c-0">
 
-                                            <tr *ngFor="let data of viewData.entities.Entities|paginate: {id:'entities', itemsPerPage: 5, currentPage: p1.entitySearchInput  }|filter:entitySearchInput">
+                                            <tr *ngFor="let data of viewData.entities.Entities|filter:entitySearchInput|paginate: {id:'entities', itemsPerPage: 5, currentPage: p1.entitySearchInput  }">
                                                 <td>{{data.Text}} </td>
                                                 <td class="line"><span [style.background]="setColor(data.Type)"></span> {{data.Type}}</td>
                                                 <td class="text-end">{{ data.Score}}%</td>
@@ -189,7 +189,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="c-0">
-                                            <tr *ngFor="let data of viewData.keyPhaseResults.KeyPhrases |paginate: {id:'keyphase', itemsPerPage: 5, currentPage: p1.entitySearchInputkeyphase  }|filter:entitySearchInputkeyphase">
+                                            <tr *ngFor="let data of viewData.keyPhaseResults.KeyPhrases|filter:entitySearchInputkeyphase |paginate: {id:'keyphase', itemsPerPage: 5, currentPage: p1.entitySearchInputkeyphase  }">
 
                                                 <td>{{data.Text}}</td>
                                                 <td class="text-end">{{data.Score}}%</td>
@@ -349,7 +349,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="c-0">
-                                                <tr *ngFor="let str of viewData.entities.Entities| paginate: {id:'pii1', itemsPerPage: 5, currentPage: p1.entitySearchInputPii  } |filter:entitySearchInputPii">
+                                                <tr *ngFor="let str of viewData.entities.Entities|filter:entitySearchInputPii| paginate: {id:'pii1', itemsPerPage: 5, currentPage: p1.entitySearchInputPii  } ">
                                                     <td>{{str.Text}}</td>
                                                     <td class="line">{{str.Type}}</td>
                                                     <td class="text-end">{{str.Score}}%</td>
@@ -388,7 +388,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="c-0">
-                                                <tr *ngFor="let str of viewData.piiEntitiesResults.Entities|paginate: {id:'pii2', itemsPerPage: 5, currentPage: p1.entitySearchInputPii1  } |filter:entitySearchInputPii1">
+                                                <tr *ngFor="let str of viewData.piiEntitiesResults.Entities|filter:entitySearchInputPii1 |paginate: {id:'pii2', itemsPerPage: 5, currentPage: p1.entitySearchInputPii1  } ">
                                                     <!-- <tr *ngFor="let str of users1 | paginate: { itemsPerPage: 6, currentPage: p2, totalItems: total2} |filter:entitySearchInputPii1"> -->
 
                                                     <td>{{str.Type}}</td>
@@ -524,7 +524,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="c-0">
-                                            <tr *ngFor="let str of viewData.syntaxResults.SyntaxTokens|paginate: {id:'syntax', itemsPerPage: 5, currentPage: p1.entitySearchInputSyntax } |filter:entitySearchInputSyntax">
+                                            <tr *ngFor="let str of viewData.syntaxResults.SyntaxTokens |filter:entitySearchInputSyntax|paginate: {id:'syntax', itemsPerPage: 5, currentPage: p1.entitySearchInputSyntax } ">
                                                 <td>{{str.Text}} </td>
                                                 <td>{{ getSyntax(str.PartOfSpeech.Tag)}}</td>
                                                 <td class="text-end">{{roundoff(str.PartOfSpeech.Score)}}</td>
