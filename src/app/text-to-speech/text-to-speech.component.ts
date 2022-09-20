@@ -36,16 +36,23 @@ export class TextToSpeechComponent implements OnInit {
       this.loading = true;
 
       //console.log(this.loading)
-      fetch(fetchUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          this.response = true;
-          //console.log(data.url);
-          this.downloadurl = data.url;
-          this.loading = false;
-          this.smallConverter = true;
-          //console.log(this.loading)
-        });
+      try {
+        fetch(fetchUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            this.response = true;
+            //console.log(data.url);
+            this.downloadurl = data.url;
+            this.loading = false;
+            this.smallConverter = true;
+            //console.log(this.loading)
+          });
+      } catch (err) {
+      }
+      finally {
+        this.loading = false;
+
+      }
     }
   }
 

@@ -243,3 +243,13 @@ a:not([href]):not([class]):hover {
 textarea {
     resize: none !important;
 }
+
+.modal-content .col-3 {
+    width: 21%;
+    height: 640px;
+}
+
+.modal-content .col-9 {
+    width: 78%;
+    height: 640px;
+}

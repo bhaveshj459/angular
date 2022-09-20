@@ -432,6 +432,6 @@
             <img src="assets/image/downloadlogo.jpg" alt="not dounf"> DOWNLOAD TRANSCRIPTION
         </a>
     </button>
-    <button type="button" class="btn btnprimary" (click)="clearDemo()">RESET DEMO</button>
+    <button type="button" class="btn btnprimary" (click)="clearDemo()" [ngClass]="toReset?'':'customdisabled'">RESET DEMO</button>
 
 </div>

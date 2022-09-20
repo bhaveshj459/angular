@@ -10,8 +10,7 @@
 }
 
 .modal-body {
-    padding-top: 18px;
-    max-height: 506px;
+    height: 519px;
     overflow: auto;
 }
 
@@ -201,4 +200,9 @@ textarea {
 
 input:focus {
     box-shadow: #3498db;
+}
+
+.modal-content {
+    border-radius: 24px;
+    height: 100% !important;
 }

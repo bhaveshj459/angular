@@ -13,6 +13,7 @@ import { VariableBinding } from '@angular/compiler';
   styleUrls: ['./comprehend.component.css']
 })
 export class ComprehendComponent implements OnInit {
+  toReset = false;
   users: any;
   p: number = 1;
   p1: any = {
@@ -90,6 +91,8 @@ export class ComprehendComponent implements OnInit {
     this.entitySearchInputPii1 = '';
     this.entitySearchInputkeyphase = '';
     this.entitySearchInputSyntax = '';
+    this.toReset = false;
+
   }
   copyText(text: string) {
     navigator.clipboard.writeText(text);
@@ -153,7 +156,7 @@ export class ComprehendComponent implements OnInit {
 
 
             this.loader = false;
-
+            this.toReset = true;
           })
 
           .catch(err => {
@@ -164,6 +167,10 @@ export class ComprehendComponent implements OnInit {
       catch (err) {
         this.loader = false;
         console.log(err);
+      }
+      finally {
+        this.loader = false;
+
       }
     }
   }
@@ -294,7 +301,16 @@ export class ComprehendComponent implements OnInit {
   }
   letters = '0123456789ABCDEF';
   getRandomColor() {
-    var color = '#'; // <-----------
+    for (let index = 0; index < 1; index++) {
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += this.letters[Math.floor(Math.random() * 16)];
+      }
+      if (color.includes('#FA6400') || color.includes('#0091FF') || color.includes('#77FF00') || color.includes('#FF0000') || color.includes('#6439FD') || color.includes('#007dbc')) {
+        index--;
+      }
+    }
+    var color = '#';
     for (var i = 0; i < 6; i++) {
       color += this.letters[Math.floor(Math.random() * 16)];
     }

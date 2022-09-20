@@ -39,7 +39,7 @@ export class BodyComponent implements OnInit {
       title: "Text To Speech",
       link: "/text-to-speech"
     }],
-    color: "#0091FF",
+    color: "#ee5e4f",
   }, {
     title: "IMAGE RECOGNITION",
     value: [{

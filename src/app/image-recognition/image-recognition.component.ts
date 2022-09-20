@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./image-recognition.component.css']
 })
 export class ImageRecognitionComponent implements OnInit {
-
+  toReset = false;
   toUpload = true;
   width: number = 0;
   height = 0;
@@ -174,6 +174,7 @@ export class ImageRecognitionComponent implements OnInit {
           this.dowload = true;
           this.loader = false;
           this.toUpload = false;
+          this.toReset = true;
         })
         .catch(err => {
           //console.log(err);
@@ -183,6 +184,10 @@ export class ImageRecognitionComponent implements OnInit {
     catch (err) {
       this.loader = false;
       console.log(err);
+    }
+    finally {
+      this.loader = false;
+
     }
   }
 
@@ -196,7 +201,7 @@ export class ImageRecognitionComponent implements OnInit {
     this.toUpload = true;
     this.height = 0;
     this.width = 0;
-
+    this.toReset = false;
   }
 
   exportexcel(): void {

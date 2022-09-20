@@ -41,8 +41,8 @@
         <ul type="none">
           <div class="cardtitle">{{data.title}}</div>
 
-          <li *ngFor="let api of data.value" data-bs-toggle="modal" data-bs-target="#exampleModal" [ngClass]="{'my-disable':api.link=='/'}">
-            <a [routerLink]="api.link" style="text-decoration: none;" class="li-cont disable">
+          <li *ngFor="let api of data.value" [ngClass]="{'my-disable':api.link=='/'}">
+            <a [routerLink]="api.link" data-bs-toggle="modal" data-bs-target="#exampleModal" style="text-decoration: none;" class="li-cont disable">
               {{api.title}}
             </a>
           </li>

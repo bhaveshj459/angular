@@ -9,7 +9,7 @@ import { Router } from 'express';
   styleUrls: ['./textract.component.css']
 })
 export class TextractComponent implements OnInit {
-
+  toReset = false
   url: any = "assets/image/sample.png";
   change = '';
   isUploaded = false;
@@ -170,7 +170,7 @@ export class TextractComponent implements OnInit {
           });
 
           this.formsCardsData = this.formsCardsDatabase
-
+          this.toReset = true;
         })
         .catch(error => {
           this.loader = false;
@@ -181,6 +181,10 @@ export class TextractComponent implements OnInit {
       this.loader = false;
       console.log('error', error);
     }
+    finally {
+      this.loader = false;
+      this.toReset = true;
+    }
   }
 
   reset() {
@@ -189,6 +193,7 @@ export class TextractComponent implements OnInit {
     this.rowTextDatabase = []
     this.tags = this.rowTextDatabase;
     this.loader = false;
+    this.toReset = false;
 
     this.formsInput = '';
     this.formsCardsDatabase = [];

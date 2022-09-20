@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class SpeechToTextComponent implements OnInit {
   selectAll: boolean = false;
+  toReset = false;
   financial0 = false;
   financial = false;
   countP1 = 0;
@@ -139,33 +140,47 @@ export class SpeechToTextComponent implements OnInit {
     }
     catch (error) {
       console.log('error', error);
+    }
+    finally {
+      this.loader = false;
       this.loader = false;
       this.toBeDisplayedtext = 'Failed To Upload';
+      this.toReset = true;
     }
   }
 
   async getData(tokenID: string) {
 
 
-    fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" + tokenID, {
-      method: 'GET',
-      redirect: 'follow'
-    })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result.response.data.results.transcripts[0].transcript
-        );
-        this.loader = false;
-        this.toBeDisplayedtext = 'DONE!';
-        this.outputData = result.response.data.results.transcripts[0].transcript;
-        const data = this.outputData;
-        const blob = new Blob([data], { type: 'application/octet-stream' });
-
-        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-
-        this.toSubmit = false;
+    try {
+      fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" + tokenID, {
+        method: 'GET',
+        redirect: 'follow'
       })
-      .catch(error => console.log('error', error));
+        .then(response => response.json())
+        .then(result => {
+          console.log(result.response.data.results.transcripts[0].transcript
+          );
+          this.loader = false;
+          this.toBeDisplayedtext = 'DONE!';
+          this.outputData = result.response.data.results.transcripts[0].transcript;
+          const data = this.outputData;
+          const blob = new Blob([data], { type: 'application/octet-stream' });
+
+          this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+          this.toReset = true;
+          this.toSubmit = false;
+        })
+        .catch(error => console.log('error', error));
+    }
+    catch {
+      this.loader = false;
+    }
+    finally {
+      this.loader = false;
+      this.toReset = true;
+
+    }
   }
 
   clearDemo() {
@@ -174,5 +189,6 @@ export class SpeechToTextComponent implements OnInit {
     this.outputData = null;
     this.file = null;
     this.fileName = '';
+    this.toReset = false;
   }
 }
