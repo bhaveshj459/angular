@@ -94,8 +94,16 @@ export class ComprehendComponent implements OnInit {
     this.toReset = false;
 
   }
-  copyText(text: string) {
-    navigator.clipboard.writeText(text);
+  copyText(item: string) {
+    // navigator.clipboard.writeText(text);
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      //@ts-ignore
+      e.clipboardData.setData('text/plain', (item));
+      e.preventDefault();
+      //@ts-ignore
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
   }
 
   async analyze(text: string) {
@@ -114,49 +122,57 @@ export class ComprehendComponent implements OnInit {
         })
           .then(response => response.json())
           .then(respdata => {
-            //console.log(respdata.entities);
-            this.response = respdata;
-            this.viewData = this.response;
-            this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
-              ...element,
-              // @ts-ignore
-              Score: Math.floor(element.Score * 100)
-            }));
-            this.response.keyPhaseResults.KeyPhrases = this.response.keyPhaseResults.KeyPhrases.map((element: any) => ({
-              ...element,
-              // @ts-ignore
-              Score: Math.floor(element.Score * 100)
-            }));
-            this.response.languageResults.Languages = this.response.languageResults.Languages.map((element: any) => ({
-              ...element,
-              // @ts-ignore
-              Score: Math.floor(element.Score * 100),
-              LanguageCode: this.getLanguage(element.LanguageCode)
-            }));
-            this.response.piiEntitiesResults.Entities = this.response.piiEntitiesResults.Entities.map((element: any) => ({
-              ...element,
-              // @ts-ignore
-              Score: Math.floor(element.Score * 100)
-            }));
-            // this.response.sentiment.SentimentScore.Positive = (Number.parseFloat(this.response.sentiment.SentimentScore.Positive)).toFixed(2);
-            // this.response.sentiment.SentimentScore.Negative = this.response.sentiment.SentimentScore.Negative.toFixed(2);
-            // this.response.sentiment.SentimentScore.Neutral = this.response.sentiment.SentimentScore.Neutral.toFixed(2);
-            // this.response.sentiment.SentimentScore.Mixed = this.response.sentiment.SentimentScore.Mixed.toFixed(2);
+            if (respdata.errorMessage) {
+              console.log(respdata)
+              //@ts-ignore
+              alert("ERROR " + respData.errorType);
+              this.reset();
+            }
+            else {
+              //console.log(respdata.entities);
+              this.response = respdata;
+              this.viewData = this.response;
+              this.response.entities.Entities = this.response.entities.Entities.map((element: any) => ({
+                ...element,
+                // @ts-ignore
+                Score: Math.floor(element.Score * 100)
+              }));
+              this.response.keyPhaseResults.KeyPhrases = this.response.keyPhaseResults.KeyPhrases.map((element: any) => ({
+                ...element,
+                // @ts-ignore
+                Score: Math.floor(element.Score * 100)
+              }));
+              this.response.languageResults.Languages = this.response.languageResults.Languages.map((element: any) => ({
+                ...element,
+                // @ts-ignore
+                Score: Math.floor(element.Score * 100),
+                LanguageCode: this.getLanguage(element.LanguageCode)
+              }));
+              this.response.piiEntitiesResults.Entities = this.response.piiEntitiesResults.Entities.map((element: any) => ({
+                ...element,
+                // @ts-ignore
+                Score: Math.floor(element.Score * 100)
+              }));
+              // this.response.sentiment.SentimentScore.Positive = (Number.parseFloat(this.response.sentiment.SentimentScore.Positive)).toFixed(2);
+              // this.response.sentiment.SentimentScore.Negative = this.response.sentiment.SentimentScore.Negative.toFixed(2);
+              // this.response.sentiment.SentimentScore.Neutral = this.response.sentiment.SentimentScore.Neutral.toFixed(2);
+              // this.response.sentiment.SentimentScore.Mixed = this.response.sentiment.SentimentScore.Mixed.toFixed(2);
 
-            //console.log("rep" + this.response.entities)
-            this.jsonInputData = `{
+              //console.log("rep" + this.response.entities)
+              this.jsonInputData = `{
   "Text" : ` + text + `
 }`;
-            this.jsonResponseEntities = JSON.stringify(respdata.entities, null, 2);
-            this.jsonResponseKeyPhase = JSON.stringify(respdata.keyPhaseResults, null, 2);
-            this.jsonResponseSentiment = JSON.stringify(respdata.sentiment, null, 2);
-            this.jsonResponseSyntax = JSON.stringify(respdata.syntaxResults, null, 2);
-            this.jsonResponsePii = JSON.stringify(respdata.piiEntitiesResults, null, 2);
-            this.jsonResponseLanguage = JSON.stringify(respdata.languageResults, null, 2);
+              this.jsonResponseEntities = JSON.stringify(respdata.entities, null, 2);
+              this.jsonResponseKeyPhase = JSON.stringify(respdata.keyPhaseResults, null, 2);
+              this.jsonResponseSentiment = JSON.stringify(respdata.sentiment, null, 2);
+              this.jsonResponseSyntax = JSON.stringify(respdata.syntaxResults, null, 2);
+              this.jsonResponsePii = JSON.stringify(respdata.piiEntitiesResults, null, 2);
+              this.jsonResponseLanguage = JSON.stringify(respdata.languageResults, null, 2);
 
 
-            this.loader = false;
-            this.toReset = true;
+              this.loader = false;
+              this.toReset = true;
+            }
           })
 
           .catch(err => {

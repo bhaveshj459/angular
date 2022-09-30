@@ -22,7 +22,7 @@
                     <div class="d-inline-block">
                         <button type="button" class="text-uppercase button button-sm me-2" (click)="clearText()">Clear
                             text</button>
-                        <button type="button" class="text-uppercase button button-sm button-sm-primary px-22p" (click)="analyze(comprehendTextarea1)">ANALYZE <i class="fa-solid fa-spinner fa-spin" *ngIf="loader"></i></button>
+                        <button type="button" class="text-uppercase button button-sm button-sm-primary px-22p" (click)="analyze(comprehendTextarea1)" [ngClass]="loader? 'my-disable':''">ANALYZE <i class="fa-solid fa-spinner fa-spin" *ngIf="loader"></i></button>
                     </div>
                 </div>
 

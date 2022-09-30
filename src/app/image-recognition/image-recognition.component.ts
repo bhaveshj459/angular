@@ -99,37 +99,9 @@ export class ImageRecognitionComponent implements OnInit {
       this.url = reader.result;
     }
     event
-    //console.log(event.target.files[0])
+
   }
 
-  //   getRenderedSize(contains:any, cWidth:any, cHeight:any, width:any, height:any, pos:any) {
-  //   var oRatio = width / height,
-  //     cRatio = cWidth / cHeight;
-  //   return function () {
-  //     if (contains ? (oRatio > cRatio) : (oRatio < cRatio)) {
-  //       width = cWidth;
-  //       height = cWidth / oRatio;
-  //     } else {
-  //       width = cHeight * oRatio;
-  //       height = cHeight;
-  //     }
-  //     //@ts-ignore
-  //     this.left = (cWidth - this.width) * (pos / 100);
-  //     this.right = this.width + this.left;
-  //     return this;
-  //   }.call({});
-  // }
-
-
-  // getImgSizeInfo(img:any) {
-  //   var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
-  //   return this.getRenderedSize(true,
-  //     img.width,
-  //     img.height,
-  //     img.naturalWidth,
-  //     img.naturalHeight,
-  //     parseInt(pos[0]));
-  // }
 
 
 
@@ -158,23 +130,31 @@ export class ImageRecognitionComponent implements OnInit {
       await fetch(url, body)
         .then(resp => resp.json())
         .then(respData => {
-          this.imageresult = respData;
-          this.imageresult.body.Labels = respData.body.Labels.filter((element: any) => {
-            if (element.Confidence > 82) {
-              return element
-            }
-          })
-          this.database = this.imageresult.body.Labels.map((element: any) => ({
-            ...element,
-            // @ts-ignore
-            Confidence: parseInt(element.Confidence)
-          }))
-          //console.log(this.database);
-          this.results = this.database;
-          this.dowload = true;
-          this.loader = false;
-          this.toUpload = false;
-          this.toReset = true;
+          if (respData.errorMessage) {
+            console.log(respData)
+            //@ts-ignore
+            alert("ERROR " + respData.errorType);
+            this.clr();
+          }
+          else {
+            this.imageresult = respData;
+            this.imageresult.body.Labels = respData.body.Labels.filter((element: any) => {
+              if (element.Confidence > 82) {
+                return element
+              }
+            })
+            this.database = this.imageresult.body.Labels.map((element: any) => ({
+              ...element,
+              // @ts-ignore
+              Confidence: parseInt(element.Confidence)
+            }))
+            //console.log(this.database);
+            this.results = this.database;
+            this.dowload = true;
+            this.loader = false;
+            this.toUpload = false;
+            this.toReset = true;
+          }
         })
         .catch(err => {
           //console.log(err);

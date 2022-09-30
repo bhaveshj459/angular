@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { elementAt } from 'rxjs';
+import { elementAt, throwError } from 'rxjs';
 import { Route } from '@angular/router'
 import { Router } from 'express';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { catchError, retry } from 'rxjs/operators'
+import { error } from 'jquery';
 
+// import 'rxjs/add/operator/catch'
 @Component({
   selector: 'app-textract',
   templateUrl: './textract.component.html',
@@ -18,6 +22,7 @@ export class TextractComponent implements OnInit {
   tags = this.rowTextDatabase;
   loader = false;
 
+
   formsInput = '';
   formsCardsDatabase: any = [];
   formsCardsData = this.formsCardsDatabase;
@@ -30,18 +35,22 @@ export class TextractComponent implements OnInit {
   queryDatabase: any = [];
   queryData = this.queryDatabase;
 
-  constructor() {
+  constructor(private http: HttpClient) {
 
   }
-  selectFile(event: any) { //Angular 11, for stricter type
+  selectFile(event: any) {
     var reader = new FileReader();
+    console.log(event.target.files[0]['type'])
     reader.readAsDataURL(event.target.files[0]);
 
     reader.onload = (_event) => {
       this.url = reader.result;
+
+      this.getData(event.target.files[0]);
+
     }
 
-    this.getData(event.target.files[0]);
+
   }
   ngOnInit(): void {
   }
@@ -102,88 +111,83 @@ export class TextractComponent implements OnInit {
     this.loader = true;
 
     try {
-      await fetch("https://wmo8056gr6.execute-api.ap-south-1.amazonaws.com/dev/textractapiresource", {
-        method: 'POST',
-        headers: myHeaders,
-        body: file,
-        redirect: 'follow'
-      })
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.rowTextDatabase = result.body;
-          this.tags = this.rowTextDatabase;
-          this.isUploaded = true;
-          this.loader = false;
-          // this.formsCardsDatabase = result.kvs.map((key: any, value: any) => key + "_" + value);
-          // console.log(this.formsCardsData)
-          this.formsCardsDatabase = [];
-          this.tableDatabase = [];
-          for (const [key, value] of Object.entries(result.kvs)) {
-            this.formsCardsDatabase.push({
-              heading: key,
-              data: value
-            })
-          }
-          this.tableDatabase = [];
-          // for (const [key, value] of Object.entries(result.table[0])) {
-          //   this.formsCardsDatabase.push({
-          //     heading: key,
-          //     data: value
-          //   })
-          //   this.
-          // }
+      let resp = this.http.post("https://wmo8056gr6.execute-api.ap-south-1.amazonaws.com/dev/textractapiresource", file
+        // {
+        //   method: 'POST',
+        //   headers: myHeaders,
+        //   body: file,
+        //   redirect: 'follow'
+        // }
+      )
 
-          result.table.forEach((element: any) => {
-            let obj = [];
-            //console.log(Object.keys(element));
-            for (let index = 1; index <= Object.keys(element).length; index++) {
-              var obj2 = []
-              for (let index1 = 1; index1 <= Object.keys(element[index]).length; index1++) {
-                obj2.push(element[index][index1]);
-              }
-              obj.push(obj2);
-            }
-
-            console.log(obj);
+        .subscribe((result: any) => {
+          if (result.errorMessage) {
+            console.log(result)
             //@ts-ignore
-            this.tableDatabase = obj;
-            this.tableData = this.tableDatabase
-            // let obj={
-            //   Item: element.'1',
-            //   Qty: element,
-            //   Price: element,
-            //   Total: element
+            alert("ERROR " + result.errorType);
+            this.reset();
+          }
+          else {
+            console.log(result);
+            this.rowTextDatabase = result.body;
+            this.tags = this.rowTextDatabase;
+            this.isUploaded = true;
+
+            // this.formsCardsDatabase = result.kvs.map((key: any, value: any) => key + "_" + value);
+            // console.log(this.formsCardsData)
+            this.formsCardsDatabase = [];
+            this.tableDatabase = [];
+            for (const [key, value] of Object.entries(result.kvs)) {
+              this.formsCardsDatabase.push({
+                heading: key,
+                data: value
+              })
+            }
+            this.tableDatabase = [];
+            // for (const [key, value] of Object.entries(result.table[0])) {
+            //   this.formsCardsDatabase.push({
+            //     heading: key,
+            //     data: value
+            //   })
+            //   this.
             // }
 
-            // elem.map((element: any) => (
-            //   //console.log(element)
-            //   {
-            //     ...element,
+            result.table.forEach((element: any) => {
+              let obj = [];
+              //console.log(Object.keys(element));
+              for (let index = 1; index <= Object.keys(element).length; index++) {
+                var obj2 = []
+                for (let index1 = 1; index1 <= Object.keys(element[index]).length; index1++) {
+                  obj2.push(element[index][index1]);
+                }
+                obj.push(obj2);
+              }
 
-            //     Item: element,
-            //     Qty: element,
-            //     Price: element,
-            //     Total: element
-            //   }
-            // ))
-          });
+              console.log(obj);
+              //@ts-ignore
+              this.tableDatabase = obj;
+              this.tableData = this.tableDatabase
 
-          this.formsCardsData = this.formsCardsDatabase
-          this.toReset = true;
-        })
-        .catch(error => {
-          this.loader = false;
-          console.log('error', error);
-        });
+            });
+
+            this.formsCardsData = this.formsCardsDatabase
+            this.toReset = true;
+            this.loader = false;
+          }
+        },
+          (error) => {
+            this.loader = false;
+            console.log('error', error);
+            //@ts-ignore
+            alert(error.errorMessage)
+          })
+
     }
     catch (error) {
       this.loader = false;
       console.log('error', error);
-    }
-    finally {
-      this.loader = false;
-      this.toReset = true;
+      //@ts-ignore
+      alert(error.errorMessage)
     }
   }
 

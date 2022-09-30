@@ -127,10 +127,21 @@ export class SpeechToTextComponent implements OnInit {
       })
         .then(response => response.json())
         .then(result => {
-          console.log(result)
-          //this.loader = false;
-          this.toBeDisplayedtext = 'Getting Transcription Job ';
-          this.getData(result.TranscriptionJobName)
+          if (result.errorMessage) {
+            console.log(result)
+            //@ts-ignore
+            alert("ERROR " + respData.errorType);
+            this.loader = false;
+            this.loader = false;
+            this.toBeDisplayedtext = 'Failed To Upload';
+            this.toReset = true;
+          }
+          else {
+            console.log(result)
+            //this.loader = false;
+            this.toBeDisplayedtext = 'Getting Transcription Job ';
+            this.getData(result.TranscriptionJobName)
+          }
         })
         .catch(error => {
           console.log('error', error);
@@ -140,36 +151,41 @@ export class SpeechToTextComponent implements OnInit {
     }
     catch (error) {
       console.log('error', error);
-    }
-    finally {
       this.loader = false;
       this.loader = false;
       this.toBeDisplayedtext = 'Failed To Upload';
       this.toReset = true;
     }
+
   }
 
   async getData(tokenID: string) {
 
 
     try {
-      fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" + tokenID, {
+      await fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" + tokenID, {
         method: 'GET',
         redirect: 'follow'
       })
         .then(response => response.json())
         .then(result => {
-          console.log(result.response.data.results.transcripts[0].transcript
-          );
-          this.loader = false;
-          this.toBeDisplayedtext = 'DONE!';
-          this.outputData = result.response.data.results.transcripts[0].transcript;
-          const data = this.outputData;
-          const blob = new Blob([data], { type: 'application/octet-stream' });
+          if (result.status == "FAILED") {
+            console.log(result);
+            this.toBeDisplayedtext = "FAILED";
+            this.loader = false;
+          }
+          else {
+            console.log(result);
+            this.loader = false;
+            this.toBeDisplayedtext = 'DONE!';
+            this.outputData = result.response.data.results.transcripts[0].transcript;
+            const data = this.outputData;
+            const blob = new Blob([data], { type: 'application/octet-stream' });
 
-          this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-          this.toReset = true;
-          this.toSubmit = false;
+            this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+            this.toReset = true;
+            this.toSubmit = false;
+          }
         })
         .catch(error => console.log('error', error));
     }

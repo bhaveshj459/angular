@@ -28,7 +28,7 @@ export class TextToSpeechComponent implements OnInit {
     this.processedText = '';
   }
 
-  convertText() {
+  async convertText() {
     if (this.text.length > 1) {
       this.processedText = this.text
       //console.log(this.speaker);
@@ -37,15 +37,17 @@ export class TextToSpeechComponent implements OnInit {
 
       //console.log(this.loading)
       try {
-        fetch(fetchUrl)
+
+        //@ts-ignore
+        await fetch(fetchUrl.replaceAll('  ', ' ').replaceAll('"', ''))
           .then((response) => response.json())
           .then((data) => {
             this.response = true;
-            //console.log(data.url);
+
             this.downloadurl = data.url;
             this.loading = false;
             this.smallConverter = true;
-            //console.log(this.loading)
+
           });
       } catch (err) {
       }

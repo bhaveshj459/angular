@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module'
+import { HttpClientModule } from '@angular/common/http';
+//import { MatSliderModule } from '@angular/material/slider';
 
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
@@ -45,7 +47,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     EditorModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    HttpClientModule,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
